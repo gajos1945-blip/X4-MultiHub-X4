@@ -1,7 +1,7 @@
 {
   "project": "X4 MultiHub",
-  "version": "0.8-dev",
-  "status": "DEVELOPMENT",
+  "version": "0.9-rc1",
+  "status": "RELEASE_CANDIDATE_HARDWARE_UNVERIFIED",
   "base": {
     "project": "CrossPoint Reader",
     "release": "1.6.0",
@@ -45,9 +45,16 @@
     "Central Dashboard layout editor",
     "Central market/weather cache clearing",
     "Polish-oriented MultiHub main-menu labels",
-    "Wi-Fi connection state shown in MultiHub Settings"
+    "Wi-Fi connection state shown in MultiHub Settings",
+    "Release-candidate source audit",
+    "Full ESP image structure validation",
+    "ESP internal XOR checksum validation",
+    "Appended ESP SHA-256 validation when present",
+    "Unexpected trailing-data rejection",
+    "Application partition spare-space reporting"
   ],
   "not_implemented": [
+    "Physical XTEINK X4 boot/UI validation",
     "Reliable elapsed cache age calculation until X4 RTC/NTP behavior is physically verified",
     "Automatic Today date from device RTC/NTP",
     "Reader current-book progress card on Dashboard",

@@ -1,5 +1,5 @@
 X4 MULTIHUB — PROJECT 2
-v0.8-dev
+v0.9-rc1
 =======================
 
 CEL
@@ -20,7 +20,7 @@ Dodatkowo:
 - pogoda online
 - dane przechowywane i cache'owane na microSD
 
-STATUS v0.8-dev
+STATUS v0.9-rc1
 ---------------
 IMPLEMENTED:
 - Reader w MultiHub otwiera stockowa biblioteke / przegladarke plikow CrossPoint
@@ -35,7 +35,7 @@ IMPLEMENTED:
 - testy gatewaya i buildera
 - fail-closed weryfikacja flash/offset/partitions przed publikacja BIN
 
-NOT IMPLEMENTED w v0.8-dev:
+NOT IMPLEMENTED w v0.9-rc1:
 - Field Manual
 - Daily Planner
 - portfolio/favorites na X4
@@ -52,19 +52,22 @@ jesli krytyczne wartosci sa UNKNOWN.
 Ten workflow nie wykonuje erase_flash i nie flashuje urzadzenia.
 
 
-v0.8-dev: Field Manual jest teraz IMPLEMENTED; szczegoly w STEP_01_GITHUB.md.
+v0.9-rc1: Field Manual jest teraz IMPLEMENTED; szczegoly w STEP_01_GITHUB.md.
 
 
-v0.8-dev: Daily Planner jest teraz IMPLEMENTED; automatyczna data RTC/NTP pozostaje jawnie odlozona.
+v0.9-rc1: Daily Planner jest teraz IMPLEMENTED; automatyczna data RTC/NTP pozostaje jawnie odlozona.
 
 
-v0.8-dev: Markets jest teraz IMPLEMENTED; Weather UI i Dashboard pozostaja kolejnym etapem.
+v0.9-rc1: Markets jest teraz IMPLEMENTED; Weather UI i Dashboard pozostaja kolejnym etapem.
 
 
-v0.8-dev: Weather i Dashboard sa teraz IMPLEMENTED. Cache/resilience pozostaja etapem v0.7.
+v0.9-rc1: Weather i Dashboard sa teraz IMPLEMENTED. Cache/resilience pozostaja etapem v0.7.
 
 
-v0.8-dev: cache i resilience sa IMPLEMENTED; centralne Settings pozostaje kolejnym etapem.
+v0.9-rc1: cache i resilience sa IMPLEMENTED; centralne Settings pozostaje kolejnym etapem.
 
 
-v0.8-dev: centralne Ustawienia MultiHub i glowne UX sa IMPLEMENTED. Nastepny etap: v0.9-rc.
+v0.9-rc1: centralne Ustawienia MultiHub i glowne UX sa IMPLEMENTED. Nastepny etap: v0.9-rc.
+
+
+v0.9-rc1: RELEASE CANDIDATE. Static/CI release gates sa zaostrzone. Physical X4 validation: NOT RUN.

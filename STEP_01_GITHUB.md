@@ -1,36 +1,35 @@
-# Etap 8 — X4 MultiHub v0.8-dev UX + centralne Ustawienia
+# Etap 9 — X4 MultiHub v0.9-rc1
+
+To jest pierwszy release candidate.
 
 1. Rozpakuj ZIP.
-2. Skopiuj cala zawartosc do lokalnego repo `X4-MultiHub-X4`.
+2. Skopiuj cala zawartosc do repo `X4-MultiHub-X4`.
 3. Potwierdz nadpisanie.
 4. GitHub Desktop -> Summary:
-   `X4 MultiHub v0.8-dev UX Settings`
+   `X4 MultiHub v0.9-rc1 release candidate`
 5. Commit to main.
 6. Push origin.
-7. GitHub -> Actions -> `BUILD X4 MULTIHUB DEV BIN`.
-8. Po Success pobierz artifact:
-   `X4_MultiHub_X4_v0_8_dev`
+7. GitHub -> Actions.
+8. Workflow nazywa sie teraz:
+   `BUILD X4 MULTIHUB RC BIN`
+9. Po Success pobierz artifact:
+   `X4_MultiHub_X4_v0_9_rc1`
 
 Oczekiwany BIN:
-`X4_MultiHub_X4_v0.8-dev.bin`
+`X4_MultiHub_X4_v0.9-rc1.bin`
 
-Nowe funkcje:
-- centralny ekran Ustawienia MultiHub,
-- status Wi-Fi,
-- edycja X4 Data Gateway,
-- edycja miasta pogody,
-- edycja aktywnej daty Planera,
-- wejscie do Uklad Dashboard,
-- czyszczenie cache rynkow,
-- czyszczenie cache pogody,
-- czyszczenie calego cache,
-- ekran O programie z wersja,
-- glowne menu uproszczone:
-  Czytnik / Instrukcje / Planer / Rynki / Pogoda / Dashboard / Ustawienia.
+RC dodaje dodatkowe bramki:
+- audit zrodel,
+- brak automatycznego erase_flash,
+- pelna analiza struktury ESP BIN,
+- wewnetrzny checksum ESP,
+- appended SHA-256,
+- brak dodatkowego ogona danych,
+- wszystkie markery funkcji w finalnym BIN,
+- fit do potwierdzonej partycji aplikacji,
+- raport wolnego miejsca.
 
-Po udanym v0.8 przechodzimy do v0.9-rc:
-- finalne testy integracyjne,
-- statyczna analiza BIN,
-- kontrola wszystkich markerow,
-- kontrola partycji i zapasu,
-- release candidate hardware-unverified.
+To nadal jest APPLICATION BIN, nie merged/full-flash BIN.
+
+Status fizycznego X4 pozostaje:
+HARDWARE UNVERIFIED

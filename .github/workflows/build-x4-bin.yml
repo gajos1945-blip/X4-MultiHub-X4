@@ -1,4 +1,4 @@
-name: BUILD X4 MULTIHUB DEV BIN
+name: BUILD X4 MULTIHUB RC BIN
 
 on:
   push:
@@ -57,14 +57,14 @@ jobs:
       - name: Build X4 MultiHub
         run: python .builder/build_ci.py
 
-      - name: Upload development BIN
+      - name: Upload release candidate BIN
         uses: actions/upload-artifact@v4
         with:
-          name: X4_MultiHub_X4_v0_8_dev
+          name: X4_MultiHub_X4_v0_9_rc1
           if-no-files-found: error
           path: |
-            dist/X4_MultiHub_X4_v0.8-dev.bin
-            dist/X4_MultiHub_X4_v0.8-dev.bin.sha256.txt
+            dist/X4_MultiHub_X4_v0.9-rc1.bin
+            dist/X4_MultiHub_X4_v0.9-rc1.bin.sha256.txt
             dist/build_manifest.json
             dist/source_report.json
           retention-days: 30

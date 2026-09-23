@@ -68,11 +68,16 @@
 - [DONE] navigation consistency for all main modules
 - [DEFERRED] full Polish diacritics until physical font rendering is verified
 
-## v0.9-rc
-- integration tests
-- static BIN inspection
-- feature marker checks
-- hardware test checklist
+## v0.9-rc1 — Release Candidate
+- [DONE] integration tests
+- [DONE] RC source audit
+- [DONE] full static ESP BIN inspection
+- [DONE] internal checksum validation
+- [DONE] appended SHA-256 validation
+- [DONE] feature marker checks
+- [DONE] application partition spare-space reporting
+- [DONE] hardware smoke-test checklist
+- [WAITING] physical X4 validation
 
 ## v1.0.0
 Only after physical X4 validation.

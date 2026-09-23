@@ -57,7 +57,7 @@ def test_markets_ui_has_dynamic_asset_modes_and_unavailable_state():
 
 def test_v05_manifest_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "0.8-dev"
+    assert data["version"] == "0.9-rc1"
     assert any("Markets UI" in x for x in data["implemented"])
     assert any("Weather UI" in x for x in data["implemented"])
     assert any("Dashboard combining" in x for x in data["implemented"])
