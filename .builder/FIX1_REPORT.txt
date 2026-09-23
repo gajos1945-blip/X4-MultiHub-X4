@@ -1,21 +1,27 @@
-X4 MultiHub v0.5-dev-fix1
+X4 MultiHub v0.7-dev-fix1
 =========================
 
-Observed GitHub Actions compile error:
-  MarketStore.cpp:51:21:
-  class HalFile has no member named 'readString'
+GitHub result:
+- C++/PlatformIO build: SUCCESS
+- firmware.elf: created
+- firmware.bin: created
+- failure occurred only at:
+  "5/7 Validate application image and ranges"
 
-Cause:
-CrossPoint's HalFile abstraction is not Arduino File and does not expose
-readString().
+Root cause:
+release_guard.py correctly required the marker:
+  NOT IMPLEMENTED v0.7
+
+but MultiHubActivity.cpp still contained:
+  NOT IMPLEMENTED v0.6
+
+Therefore the finished BIN could not contain the required v0.7 marker and
+the safety validator intentionally blocked artifact publication.
 
 Fix:
-Replaced HalFile::readString() with the same supported API style already used
-elsewhere in this project:
-  file.available()
-  file.read()
+- updated the Settings placeholder from v0.6 to v0.7,
+- added a regression test that checks every REQUIRED_MARKERS entry exists
+  somewhere in the firmware overlay source before PlatformIO compilation.
 
-The read is bounded to 2048 bytes before JSON parsing.
-
-No flash size, offsets, partition layout, application address, bootloader or
-OTA data assumptions were changed.
+No flash size, offset, partition table, application address, bootloader,
+ota_data or full-flash assumptions were changed.

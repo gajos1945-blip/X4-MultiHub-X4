@@ -37,7 +37,7 @@ void MultiHubActivity::rebuildRows() {
   values[3] = "GPW / NewConnect / Crypto / FX";
   values[4] = "Open-Meteo przez Gateway";
   values[5] = "Pogoda / Rynki / Planner";
-  values[6] = "NOT IMPLEMENTED v0.6";
+  values[6] = "NOT IMPLEMENTED v0.7";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -93,7 +93,7 @@ void MultiHubActivity::activateIndex(const int index) {
           });
       return;
     case 6:
-      header = "Ustawienia - NOT IMPLEMENTED v0.6";
+      header = "Ustawienia - NOT IMPLEMENTED v0.7";
       break;
     default:
       return;
