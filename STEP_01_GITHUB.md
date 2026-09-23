@@ -1,23 +1,33 @@
-# Etap 2 — X4 MultiHub v0.2-dev Reader integration
+# Etap 3 — X4 MultiHub v0.3-dev Field Manual
 
 1. Rozpakuj ZIP.
-2. Skopiuj całą zawartość folderu do lokalnego repo `X4-MultiHub-X4`.
-3. Potwierdź nadpisanie.
+2. Skopiuj cala zawartosc folderu do lokalnego repo `X4-MultiHub-X4`.
+3. Potwierdz nadpisanie.
 4. GitHub Desktop -> Summary:
-   `X4 MultiHub v0.2-dev Reader integration`
+   `X4 MultiHub v0.3-dev Field Manual`
 5. Commit to main.
 6. Push origin.
 7. GitHub -> Actions -> `BUILD X4 MULTIHUB DEV BIN`.
 8. Po Success pobierz artifact:
-   `X4_MultiHub_X4_v0_2_dev`
+   `X4_MultiHub_X4_v0_3_dev`
 
 Oczekiwany BIN:
-`X4_MultiHub_X4_v0.2-dev.bin`
+`X4_MultiHub_X4_v0.3-dev.bin`
 
-Zmiana funkcjonalna:
-`Reader` w X4 MultiHub nie jest już placeholderem. Wywołuje potwierdzoną
-nawigację CrossPoint `activityManager.goToFileBrowser()`. Wybór pliku w
-standardowej przeglądarce pozostaje obsługiwany przez bazę CrossPoint.
+Nowe funkcje:
+- Field Manual otwiera realny modul.
+- Automatyczny indeks /Manuals na microSD.
+- Kategorie wedlug pierwszego folderu.
+- Szukanie po tytule / kategorii / sciezce.
+- Ulubione przez dlugie przytrzymanie.
+- Przebudowa indeksu.
+- Pliki .checklist z interaktywnym [ ] / [x].
+- TXT/Markdown/EPUB/XTC otwieraja stabilny reader CrossPoint.
 
-Pozostałe moduły są nadal jawnie oznaczone `NOT IMPLEMENTED v0.2`.
-Nie flashujemy tej wersji bez osobnej decyzji o teście milestone.
+Pozostaje NOT IMPLEMENTED v0.3:
+- Daily Planner
+- Markets UI/favorites
+- Dashboard
+- MultiHub Settings
+
+Nie flashujemy development milestone bez osobnej decyzji testowej.

@@ -1,0 +1,6 @@
+X4 MultiHub — Field Manual
+
+To jest przykladowy dokument offline.
+
+Umieszczaj w /Manuals wlasne pliki TXT, Markdown, EPUB, XTC oraz .checklist.
+Nazwa pierwszego podkatalogu staje sie kategoria.

@@ -1,6 +1,6 @@
 {
   "project": "X4 MultiHub",
-  "version": "0.2-dev",
+  "version": "0.3-dev",
   "status": "DEVELOPMENT",
   "base": {
     "project": "CrossPoint Reader",
@@ -12,12 +12,17 @@
     "MultiHub Home entry",
     "MultiHub shell",
     "Reader entry routes into stock CrossPoint file browser / reader workflow",
+    "Field Manual microSD index rooted at /Manuals",
+    "Field Manual dynamic categories",
+    "Field Manual search by title/category/path",
+    "Field Manual favorites persisted in JSONL index",
+    "Field Manual rebuild index action",
+    "Interactive .checklist files with persistent checked state",
     "fail-closed CI build verification",
     "EODHD gateway provider foundation",
     "Open-Meteo gateway provider foundation"
   ],
   "not_implemented": [
-    "Field Manual",
     "Daily Planner",
     "X4 market favorites",
     "Markets UI",

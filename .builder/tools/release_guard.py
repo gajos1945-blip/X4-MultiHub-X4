@@ -6,10 +6,14 @@ REQUIRED_MARKERS = (
     b"Reader",
     b"Otworz biblioteke / pliki",
     b"Field Manual",
+    b"Manuale offline / checklisty",
+    b"Checklist",
+    b"Przebuduj indeks",
+    b"/Manuals",
     b"Daily Planner",
     b"Markets & Weather",
     b"Dashboard",
-    b"NOT IMPLEMENTED v0.2",
+    b"NOT IMPLEMENTED v0.3",
 )
 
 def verify_required_markers(path: Path) -> list[str]:

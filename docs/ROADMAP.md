@@ -14,10 +14,12 @@
 - [DONE] compile-time and marker smoke checks
 
 ## v0.3-dev — Field Manual
-- microSD manual index
-- categories
-- reader/search
-- favorites/checklists
+- [DONE] microSD manual index rooted at /Manuals
+- [DONE] dynamic categories from first folder
+- [DONE] search by title/category/path
+- [DONE] favorites persisted across rebuild
+- [DONE] interactive .checklist files
+- [DONE] TXT/Markdown/EPUB/XTC routing to CrossPoint reader
 
 ## v0.4-dev — Daily Planner
 - persistent task model
