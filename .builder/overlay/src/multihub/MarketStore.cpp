@@ -48,7 +48,13 @@ bool loadGateway(std::string& gateway) {
   HalFile file;
   if (!Storage.openFileForRead(MOD, CONFIG_PATH, file)) return false;
 
-  String raw = file.readString();
+  std::string raw;
+  raw.reserve(256);
+  while (file.available() && raw.size() < 2048) {
+    const int ch = file.read();
+    if (ch < 0) break;
+    raw.push_back(static_cast<char>(ch));
+  }
   file.close();
 
   JsonDocument doc;

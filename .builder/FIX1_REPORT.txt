@@ -1,18 +1,21 @@
-X4 MultiHub v0.1-dev-fix1
+X4 MultiHub v0.5-dev-fix1
 =========================
 
-Problem:
-GitHub Actions stopped at "Run Python tests":
-  No module named pytest
+Observed GitHub Actions compile error:
+  MarketStore.cpp:51:21:
+  class HalFile has no member named 'readString'
 
 Cause:
-pytest was not installed in the GitHub-hosted Python environment.
+CrossPoint's HalFile abstraction is not Arduino File and does not expose
+readString().
 
 Fix:
-Added:
-  uv pip install --system pytest
-before:
-  python -m pytest -q
+Replaced HalFile::readString() with the same supported API style already used
+elsewhere in this project:
+  file.available()
+  file.read()
 
-No firmware functionality, flash size, application offset or partition data
-was changed. This patch only repairs the CI test environment.
+The read is bounded to 2048 bytes before JSON parsing.
+
+No flash size, offsets, partition layout, application address, bootloader or
+OTA data assumptions were changed.
