@@ -45,9 +45,9 @@ def test_checklist_has_memory_caps():
 
 def test_v03_manifest_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "0.3-dev"
+    assert data["version"] == "0.4-dev"
     assert any("Field Manual microSD index" in x for x in data["implemented"])
-    assert "Daily Planner" in data["not_implemented"]
+    assert any("Daily Planner" in x for x in data["implemented"])
     assert data["physical_device_verified"] is False
 
 def test_sd_examples_present():

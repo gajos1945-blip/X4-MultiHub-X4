@@ -1,6 +1,6 @@
 {
   "project": "X4 MultiHub",
-  "version": "0.3-dev",
+  "version": "0.4-dev",
   "status": "DEVELOPMENT",
   "base": {
     "project": "CrossPoint Reader",
@@ -13,17 +13,18 @@
     "MultiHub shell",
     "Reader entry routes into stock CrossPoint file browser / reader workflow",
     "Field Manual microSD index rooted at /Manuals",
-    "Field Manual dynamic categories",
-    "Field Manual search by title/category/path",
-    "Field Manual favorites persisted in JSONL index",
-    "Field Manual rebuild index action",
-    "Interactive .checklist files with persistent checked state",
+    "Field Manual dynamic categories, search, favorites and checklists",
+    "Daily Planner persistent JSONL task store",
+    "Daily Planner manually selected active date with previous/next day navigation",
+    "Daily Planner add/toggle/delete tasks",
+    "Daily Planner open/all/done views",
+    "Daily Planner task priority, title, note and date editing",
     "fail-closed CI build verification",
     "EODHD gateway provider foundation",
     "Open-Meteo gateway provider foundation"
   ],
   "not_implemented": [
-    "Daily Planner",
+    "Automatic Today date from device RTC/NTP",
     "X4 market favorites",
     "Markets UI",
     "Dashboard UI",

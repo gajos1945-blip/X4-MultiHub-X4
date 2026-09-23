@@ -11,9 +11,15 @@ REQUIRED_MARKERS = (
     b"Przebuduj indeks",
     b"/Manuals",
     b"Daily Planner",
+    b"Priorytet",
+    b"Data YYYY-MM-DD",
+    b"Nastepny dzien",
+    b"Poprzedni dzien",
+    b"Dodaj zadanie",
+    b"Zadania / priorytety / notatki",
     b"Markets & Weather",
     b"Dashboard",
-    b"NOT IMPLEMENTED v0.3",
+    b"NOT IMPLEMENTED v0.4",
 )
 
 def verify_required_markers(path: Path) -> list[str]:

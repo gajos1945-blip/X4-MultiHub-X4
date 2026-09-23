@@ -22,11 +22,14 @@
 - [DONE] TXT/Markdown/EPUB/XTC routing to CrossPoint reader
 
 ## v0.4-dev — Daily Planner
-- persistent task model
-- Today
-- notes/checklists
-- priority/status
-- day navigation
+- [DONE] persistent JSONL task model
+- [DONE] manually selected active date
+- [DONE] previous/next day navigation
+- [DONE] notes
+- [DONE] priority/status
+- [DONE] open/all/done views
+- [DONE] task deletion and date move
+- [DEFERRED] automatic Today from RTC/NTP until device clock behavior is verified
 
 ## v0.5-dev — Markets
 - gateway URL setting

@@ -6,6 +6,7 @@
 #include "components/UITheme.h"
 #include "activities/ActivityManager.h"
 #include "FieldManualActivity.h"
+#include "DailyPlannerActivity.h"
 
 namespace fui = freeink::ui;
 
@@ -28,10 +29,10 @@ void MultiHubActivity::onEnter() {
 void MultiHubActivity::rebuildRows() {
   values[0] = "Otworz biblioteke / pliki";
   values[1] = "Manuale offline / checklisty";
-  values[2] = "NOT IMPLEMENTED v0.3";
-  values[3] = "NOT IMPLEMENTED v0.3";
-  values[4] = "NOT IMPLEMENTED v0.3";
-  values[5] = "NOT IMPLEMENTED v0.3";
+  values[2] = "Zadania / priorytety / notatki";
+  values[3] = "NOT IMPLEMENTED v0.4";
+  values[4] = "NOT IMPLEMENTED v0.4";
+  values[5] = "NOT IMPLEMENTED v0.4";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -55,16 +56,21 @@ void MultiHubActivity::activateIndex(const int index) {
           });
       return;
     case 2:
-      header = "Daily Planner - NOT IMPLEMENTED v0.3";
-      break;
+      startActivityForResult(
+          std::make_unique<DailyPlannerActivity>(renderer, mappedInput),
+          [this](const ActivityResult&) {
+            rebuildRows();
+            requestUpdate();
+          });
+      return;
     case 3:
-      header = "Markets & Weather - NOT IMPLEMENTED v0.3";
+      header = "Markets & Weather - NOT IMPLEMENTED v0.4";
       break;
     case 4:
-      header = "Dashboard - NOT IMPLEMENTED v0.3";
+      header = "Dashboard - NOT IMPLEMENTED v0.4";
       break;
     case 5:
-      header = "Ustawienia - NOT IMPLEMENTED v0.3";
+      header = "Ustawienia - NOT IMPLEMENTED v0.4";
       break;
     default:
       return;

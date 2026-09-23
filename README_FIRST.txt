@@ -1,5 +1,5 @@
 X4 MULTIHUB — PROJECT 2
-v0.3-dev
+v0.4-dev
 =======================
 
 CEL
@@ -20,7 +20,7 @@ Dodatkowo:
 - pogoda online
 - dane przechowywane i cache'owane na microSD
 
-STATUS v0.3-dev
+STATUS v0.4-dev
 ---------------
 IMPLEMENTED:
 - Reader w MultiHub otwiera stockowa biblioteke / przegladarke plikow CrossPoint
@@ -35,7 +35,7 @@ IMPLEMENTED:
 - testy gatewaya i buildera
 - fail-closed weryfikacja flash/offset/partitions przed publikacja BIN
 
-NOT IMPLEMENTED w v0.3-dev:
+NOT IMPLEMENTED w v0.4-dev:
 - Field Manual
 - Daily Planner
 - portfolio/favorites na X4
@@ -52,4 +52,7 @@ jesli krytyczne wartosci sa UNKNOWN.
 Ten workflow nie wykonuje erase_flash i nie flashuje urzadzenia.
 
 
-v0.3-dev: Field Manual jest teraz IMPLEMENTED; szczegoly w STEP_01_GITHUB.md.
+v0.4-dev: Field Manual jest teraz IMPLEMENTED; szczegoly w STEP_01_GITHUB.md.
+
+
+v0.4-dev: Daily Planner jest teraz IMPLEMENTED; automatyczna data RTC/NTP pozostaje jawnie odlozona.
