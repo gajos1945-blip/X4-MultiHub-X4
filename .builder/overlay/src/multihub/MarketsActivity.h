@@ -15,6 +15,7 @@ class MarketsActivity final : public UiListActivity {
   std::string asset = "pl";
   std::string lastError;
   std::string header = "Markets & Weather";
+  bool cachedData = false;
 
   std::vector<MarketFavorite> favorites;
   std::vector<MarketQuote> quotes;

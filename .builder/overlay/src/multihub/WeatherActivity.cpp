@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "MarketStore.h"
+#include "DataCache.h"
 #include "WeatherStore.h"
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
@@ -44,6 +45,7 @@ void WeatherActivity::onExit() {
 void WeatherActivity::reload() {
   MarketStore::loadGateway(gateway);
   WeatherStore::loadCity(city);
+  cachedData = DataCache::loadWeather(weather);
   rebuildRows();
 }
 
@@ -82,7 +84,13 @@ void WeatherActivity::rebuildRows() {
       place += ", ";
       place += weather.country;
     }
-    add("Lokalizacja", place, weather.observedAt);
+    std::string sourceTime = weather.observedAt;
+    if (cachedData) {
+      sourceTime = "CACHED | " + sourceTime;
+    } else {
+      sourceTime = "LIVE | " + sourceTime;
+    }
+    add("Lokalizacja", place, sourceTime);
     add("Warunki", WeatherGatewayClient::codeName(weather.weatherCode),
         "WMO " + std::to_string(weather.weatherCode));
     add("Temperatura",
@@ -112,7 +120,7 @@ void WeatherActivity::rebuildRows() {
     }
   }
 
-  header = "Pogoda";
+  header = cachedData ? "Pogoda CACHED" : "Pogoda LIVE";
   if (!lastError.empty()) header += " !";
 }
 
@@ -127,6 +135,7 @@ void WeatherActivity::editCity() {
           if (WeatherStore::saveCity(value)) {
             city = value;
             weather = {};
+            cachedData = false;
             lastError.clear();
           } else {
             lastError = "Niepoprawne miasto";
@@ -161,11 +170,21 @@ void WeatherActivity::refreshWeather() {
   WeatherGatewayClient client;
   const WeatherResponse response = client.current(gateway, city);
   if (!response.ok) {
-    lastError = response.error;
-    weather = {};
+    WeatherSnapshot cached;
+    if (DataCache::loadWeather(cached)) {
+      weather = std::move(cached);
+      cachedData = true;
+      lastError = "CACHED: " + response.error;
+    } else {
+      weather = {};
+      cachedData = false;
+      lastError = response.error;
+    }
   } else {
     weather = response.weather;
+    cachedData = false;
     lastError.clear();
+    DataCache::saveWeather(weather);
   }
   rebuildRows();
   requestUpdate();

@@ -49,11 +49,14 @@
 - [DONE] custom card ordering on device
 
 ## v0.7-dev — resilience
-- cache
-- offline fallback
-- retry/backoff
-- SD validation
-- provider error states
+- [DONE] Markets cache on microSD
+- [DONE] Weather cache on microSD
+- [DONE] cache-first startup
+- [DONE] offline/network failure fallback
+- [DONE] LIVE / CACHED / DATA UNAVAILABLE states
+- [DONE] gateway provider retry/backoff
+- [DONE] bounded/atomic cache writes
+- [DEFERRED] elapsed cache age until RTC/NTP is hardware-verified
 
 ## v0.8-dev — UX polish
 - Polish strings

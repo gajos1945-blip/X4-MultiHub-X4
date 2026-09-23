@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "DailyPlannerActivity.h"
+#include "DataCache.h"
 #include "DashboardSettingsActivity.h"
 #include "MarketsActivity.h"
 #include "WeatherActivity.h"
@@ -87,21 +88,35 @@ void DashboardActivity::reload() {
   MarketStore::loadFavorites(favorites);
   PlannerStore::load(tasks);
   PlannerStore::loadActiveDate(activeDate);
+
+  quotes.clear();
+  marketsCached = DataCache::loadMarketQuotes(quotes);
+  weatherCached = DataCache::loadWeather(weather);
+
   rebuildRows();
 }
 
 void DashboardActivity::refreshAll() {
   lastError.clear();
-  quotes.clear();
-  weather = {};
 
   if (!city.empty()) {
     WeatherGatewayClient weatherClient;
     const WeatherResponse response = weatherClient.current(gateway, city);
     if (response.ok) {
       weather = response.weather;
+      weatherCached = false;
+      DataCache::saveWeather(weather);
     } else {
-      lastError = response.error;
+      WeatherSnapshot cached;
+      if (DataCache::loadWeather(cached)) {
+        weather = std::move(cached);
+        weatherCached = true;
+        lastError = "Pogoda CACHED: " + response.error;
+      } else {
+        weather = {};
+        weatherCached = false;
+        lastError = response.error;
+      }
     }
   }
 
@@ -119,8 +134,19 @@ void DashboardActivity::refreshAll() {
     const MarketQuoteResponse response = marketClient.quotes(gateway, symbols);
     if (response.ok) {
       quotes = response.items;
-    } else if (lastError.empty()) {
-      lastError = response.error;
+      marketsCached = false;
+      DataCache::saveMarketQuotes(quotes);
+    } else {
+      std::vector<MarketQuote> cached;
+      if (DataCache::loadMarketQuotes(cached)) {
+        quotes = std::move(cached);
+        marketsCached = true;
+        if (lastError.empty()) lastError = "Rynki CACHED: " + response.error;
+      } else {
+        quotes.clear();
+        marketsCached = false;
+        if (lastError.empty()) lastError = response.error;
+      }
     }
   }
 
@@ -152,10 +178,15 @@ void DashboardActivity::rebuildRows() {
         std::string value = weather.hasTemperature
                                 ? number1(weather.temperatureC, " C")
                                 : "DATA UNAVAILABLE";
-        std::string subtitle = WeatherGatewayClient::codeName(weather.weatherCode);
+        std::string subtitle = weatherCached ? "CACHED | " : "LIVE | ";
+        subtitle += WeatherGatewayClient::codeName(weather.weatherCode);
         if (!weather.city.empty()) {
           subtitle += " | ";
           subtitle += weather.city;
+        }
+        if (!weather.observedAt.empty()) {
+          subtitle += " | ";
+          subtitle += weather.observedAt;
         }
         addRow("weather", "Pogoda", value, subtitle);
       } else {
@@ -190,14 +221,20 @@ void DashboardActivity::rebuildRows() {
                                ? favorites.size()
                                : MAX_MARKET_ROWS;
       for (size_t i = 0; i < count; ++i) {
+        std::string subtitle = marketsCached ? "CACHED | " : "LIVE | ";
+        subtitle += favorites[i].symbol;
+        const MarketQuote* q = quoteFor(favorites[i].symbol);
+        if (q && q->timestamp > 0) {
+          subtitle += " | t=";
+          subtitle += std::to_string(q->timestamp);
+        }
         addRow("markets", favorites[i].name,
-               quoteValue(quoteFor(favorites[i].symbol)),
-               favorites[i].symbol);
+               quoteValue(q), subtitle);
       }
     }
   }
 
-  header = "Dashboard";
+  header = (weatherCached || marketsCached) ? "Dashboard CACHED" : "Dashboard LIVE";
   if (!lastError.empty()) header += " !";
 }
 

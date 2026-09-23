@@ -50,10 +50,10 @@ def test_dashboard_uses_only_bounded_market_rows():
 
 def test_v06_manifest_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "0.6-dev"
+    assert data["version"] == "0.7-dev"
     assert any("Weather UI" in x for x in data["implemented"])
     assert any("Dashboard combining" in x for x in data["implemented"])
-    assert "Offline cache / stale-data fallback for Markets and Weather" in data["not_implemented"]
+    assert any("microSD cache for market quotes" in x for x in data["implemented"])
     assert data["physical_device_verified"] is False
 
 def test_release_guard_requires_weather_dashboard_runtime_markers():

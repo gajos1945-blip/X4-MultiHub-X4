@@ -21,6 +21,8 @@ class DashboardActivity final : public UiListActivity {
   std::string header = "Dashboard";
 
   WeatherSnapshot weather;
+  bool weatherCached = false;
+  bool marketsCached = false;
   std::vector<MarketFavorite> favorites;
   std::vector<MarketQuote> quotes;
   std::vector<PlannerTask> tasks;

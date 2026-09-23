@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "MarketSearchResultsActivity.h"
+#include "DataCache.h"
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
 
@@ -53,6 +54,9 @@ void MarketsActivity::reload() {
   MarketStore::loadGateway(gateway);
   favorites.clear();
   MarketStore::loadFavorites(favorites);
+
+  quotes.clear();
+  cachedData = DataCache::loadMarketQuotes(quotes);
   rebuildRows();
 }
 
@@ -100,6 +104,12 @@ void MarketsActivity::rebuildRows() {
       subtitle += " | ";
       subtitle += favorite.currency;
     }
+    if (cachedData) subtitle += " | CACHED";
+    const MarketQuote* q = quoteFor(favorite.symbol);
+    if (q && q->timestamp > 0) {
+      subtitle += " | t=";
+      subtitle += std::to_string(q->timestamp);
+    }
     rowSubtitles.push_back(std::move(subtitle));
   }
 
@@ -112,7 +122,7 @@ void MarketsActivity::rebuildRows() {
     rows.push_back(row);
   }
 
-  header = "Markets (";
+  header = cachedData ? "Markets CACHED (" : "Markets LIVE (";
   header += std::to_string(favorites.size());
   header += ")";
   if (!lastError.empty()) header += " !";
@@ -204,9 +214,20 @@ void MarketsActivity::refreshQuotes() {
 
   const MarketQuoteResponse response = client.quotes(gateway, symbols);
   if (!response.ok) {
-    lastError = response.error;
+    std::vector<MarketQuote> cached;
+    if (DataCache::loadMarketQuotes(cached)) {
+      quotes = std::move(cached);
+      cachedData = true;
+      lastError = "CACHED: " + response.error;
+    } else {
+      cachedData = false;
+      lastError = response.error;
+    }
   } else {
     quotes = response.items;
+    cachedData = false;
+    lastError.clear();
+    DataCache::saveMarketQuotes(quotes);
   }
   rebuildRows();
   requestUpdate();

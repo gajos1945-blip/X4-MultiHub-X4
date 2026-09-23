@@ -13,6 +13,7 @@ class WeatherActivity final : public UiListActivity {
   std::string lastError;
   std::string header = "Pogoda";
   WeatherSnapshot weather;
+  bool cachedData = false;
 
   std::vector<std::string> labels;
   std::vector<std::string> values;

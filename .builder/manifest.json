@@ -1,6 +1,6 @@
 {
   "project": "X4 MultiHub",
-  "version": "0.6-dev",
+  "version": "0.7-dev",
   "status": "DEVELOPMENT",
   "base": {
     "project": "CrossPoint Reader",
@@ -29,11 +29,18 @@
     "Four-day weather forecast transported by gateway",
     "Dashboard combining Weather, Markets and Planner",
     "Dashboard persistent card visibility and ordering",
-    "Dashboard card order editable on-device; long press moves card up"
+    "Dashboard card order editable on-device; long press moves card up",
+    "microSD cache for market quotes",
+    "microSD cache for weather snapshot and forecast",
+    "cache-first startup for Markets, Weather and Dashboard",
+    "offline/network-failure fallback to last successful cached data",
+    "explicit LIVE/CACHED/DATA UNAVAILABLE display states",
+    "provider timestamps retained with cached market quotes",
+    "weather observed_at retained in cache",
+    "gateway provider retry/backoff for transient network errors and HTTP 429/5xx"
   ],
   "not_implemented": [
-    "Offline cache / stale-data fallback for Markets and Weather",
-    "Retry/backoff policy beyond single request",
+    "Reliable elapsed cache age calculation until X4 RTC/NTP behavior is physically verified",
     "MultiHub Settings central screen",
     "Automatic Today date from device RTC/NTP",
     "Reader current-book progress card on Dashboard"
