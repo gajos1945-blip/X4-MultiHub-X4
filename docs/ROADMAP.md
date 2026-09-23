@@ -9,9 +9,9 @@
 - tests
 
 ## v0.2-dev — Reader integration
-- Reader entry routes into CrossPoint reader/library workflow
-- MultiHub return path
-- reader state smoke checks
+- [DONE] Reader entry routes into CrossPoint file browser / reader workflow
+- [DEFERRED] Dedicated return-to-MultiHub path; stock reader navigation remains unchanged
+- [DONE] compile-time and marker smoke checks
 
 ## v0.3-dev — Field Manual
 - microSD manual index

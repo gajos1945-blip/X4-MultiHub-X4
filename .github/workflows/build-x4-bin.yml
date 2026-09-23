@@ -60,11 +60,11 @@ jobs:
       - name: Upload development BIN
         uses: actions/upload-artifact@v4
         with:
-          name: X4_MultiHub_X4_v0_1_dev
+          name: X4_MultiHub_X4_v0_2_dev
           if-no-files-found: error
           path: |
-            dist/X4_MultiHub_X4_v0.1-dev.bin
-            dist/X4_MultiHub_X4_v0.1-dev.bin.sha256.txt
+            dist/X4_MultiHub_X4_v0.2-dev.bin
+            dist/X4_MultiHub_X4_v0.2-dev.bin.sha256.txt
             dist/build_manifest.json
             dist/source_report.json
           retention-days: 30

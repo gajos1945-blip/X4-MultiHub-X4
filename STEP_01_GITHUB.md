@@ -1,25 +1,23 @@
-# Etap 1 — utworzenie repozytorium
+# Etap 2 — X4 MultiHub v0.2-dev Reader integration
 
-Recommended repository name:
+1. Rozpakuj ZIP.
+2. Skopiuj całą zawartość folderu do lokalnego repo `X4-MultiHub-X4`.
+3. Potwierdź nadpisanie.
+4. GitHub Desktop -> Summary:
+   `X4 MultiHub v0.2-dev Reader integration`
+5. Commit to main.
+6. Push origin.
+7. GitHub -> Actions -> `BUILD X4 MULTIHUB DEV BIN`.
+8. Po Success pobierz artifact:
+   `X4_MultiHub_X4_v0_2_dev`
 
-`X4-MultiHub-X4`
+Oczekiwany BIN:
+`X4_MultiHub_X4_v0.2-dev.bin`
 
-1. Create an empty public or private GitHub repository.
-2. Clone it in GitHub Desktop.
-3. Copy the entire contents of this package into the repository.
-4. Commit:
-   `X4 MultiHub v0.1-dev foundation`
-5. Push origin.
-6. Open GitHub -> Actions.
-7. Wait for `BUILD X4 MULTIHUB DEV BIN`.
+Zmiana funkcjonalna:
+`Reader` w X4 MultiHub nie jest już placeholderem. Wywołuje potwierdzoną
+nawigację CrossPoint `activityManager.goToFileBrowser()`. Wybór pliku w
+standardowej przeglądarce pozostaje obsługiwany przez bazę CrossPoint.
 
-On success, download artifact:
-
-`X4_MultiHub_X4_v0_1_dev`
-
-Expected BIN:
-
-`X4_MultiHub_X4_v0.1-dev.bin`
-
-This v0.1 file is a development application BIN, not a merged/full-flash image.
-Do not flash it yet unless we explicitly decide to test this milestone.
+Pozostałe moduły są nadal jawnie oznaczone `NOT IMPLEMENTED v0.2`.
+Nie flashujemy tej wersji bez osobnej decyzji o teście milestone.

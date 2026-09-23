@@ -1,6 +1,6 @@
 {
   "project": "X4 MultiHub",
-  "version": "0.1-dev",
+  "version": "0.2-dev",
   "status": "DEVELOPMENT",
   "base": {
     "project": "CrossPoint Reader",
@@ -11,12 +11,12 @@
   "implemented": [
     "MultiHub Home entry",
     "MultiHub shell",
+    "Reader entry routes into stock CrossPoint file browser / reader workflow",
     "fail-closed CI build verification",
     "EODHD gateway provider foundation",
     "Open-Meteo gateway provider foundation"
   ],
   "not_implemented": [
-    "Reader integration from MultiHub",
     "Field Manual",
     "Daily Planner",
     "X4 market favorites",

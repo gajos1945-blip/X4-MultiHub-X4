@@ -4,11 +4,12 @@ from pathlib import Path
 REQUIRED_MARKERS = (
     b"X4 MultiHub",
     b"Reader",
+    b"Otworz biblioteke / pliki",
     b"Field Manual",
     b"Daily Planner",
     b"Markets & Weather",
     b"Dashboard",
-    b"NOT IMPLEMENTED v0.1",
+    b"NOT IMPLEMENTED v0.2",
 )
 
 def verify_required_markers(path: Path) -> list[str]:

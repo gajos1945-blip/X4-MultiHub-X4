@@ -3,6 +3,7 @@
 #include <GfxRenderer.h>
 
 #include "components/UITheme.h"
+#include "activities/ActivityManager.h"
 
 namespace fui = freeink::ui;
 
@@ -23,12 +24,12 @@ void MultiHubActivity::onEnter() {
 }
 
 void MultiHubActivity::rebuildRows() {
-  values[0] = "CrossPoint Reader - baza gotowa";
-  values[1] = "NOT IMPLEMENTED v0.1";
-  values[2] = "NOT IMPLEMENTED v0.1";
-  values[3] = "NOT IMPLEMENTED v0.1";
-  values[4] = "NOT IMPLEMENTED v0.1";
-  values[5] = "NOT IMPLEMENTED v0.1";
+  values[0] = "Otworz biblioteke / pliki";
+  values[1] = "NOT IMPLEMENTED v0.2";
+  values[2] = "NOT IMPLEMENTED v0.2";
+  values[3] = "NOT IMPLEMENTED v0.2";
+  values[4] = "NOT IMPLEMENTED v0.2";
+  values[5] = "NOT IMPLEMENTED v0.2";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -41,22 +42,22 @@ void MultiHubActivity::rebuildRows() {
 void MultiHubActivity::activateIndex(const int index) {
   switch (index) {
     case 0:
-      header = "Reader: uzyj Browse Files na Home (v0.1)";
-      break;
+      activityManager.goToFileBrowser();
+      return;
     case 1:
-      header = "Field Manual - NOT IMPLEMENTED v0.1";
+      header = "Field Manual - NOT IMPLEMENTED v0.2";
       break;
     case 2:
-      header = "Daily Planner - NOT IMPLEMENTED v0.1";
+      header = "Daily Planner - NOT IMPLEMENTED v0.2";
       break;
     case 3:
-      header = "Markets & Weather - NOT IMPLEMENTED v0.1";
+      header = "Markets & Weather - NOT IMPLEMENTED v0.2";
       break;
     case 4:
-      header = "Dashboard - NOT IMPLEMENTED v0.1";
+      header = "Dashboard - NOT IMPLEMENTED v0.2";
       break;
     case 5:
-      header = "Ustawienia - NOT IMPLEMENTED v0.1";
+      header = "Ustawienia - NOT IMPLEMENTED v0.2";
       break;
     default:
       return;

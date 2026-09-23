@@ -1,5 +1,5 @@
 X4 MULTIHUB — PROJECT 2
-v0.1-dev
+v0.2-dev
 =======================
 
 CEL
@@ -20,9 +20,10 @@ Dodatkowo:
 - pogoda online
 - dane przechowywane i cache'owane na microSD
 
-STATUS v0.1-dev
+STATUS v0.2-dev
 ---------------
 IMPLEMENTED:
+- Reader w MultiHub otwiera stockowa biblioteke / przegladarke plikow CrossPoint
 - bezpieczny builder GitHub Actions
 - przypieta baza CrossPoint 1.6.0
 - X4 MultiHub jako osobna pozycja na Home
@@ -34,8 +35,7 @@ IMPLEMENTED:
 - testy gatewaya i buildera
 - fail-closed weryfikacja flash/offset/partitions przed publikacja BIN
 
-NOT IMPLEMENTED w v0.1-dev:
-- finalny Reader Hub
+NOT IMPLEMENTED w v0.2-dev:
 - Field Manual
 - Daily Planner
 - portfolio/favorites na X4
