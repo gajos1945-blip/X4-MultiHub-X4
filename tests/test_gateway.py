@@ -1,0 +1,82 @@
+from __future__ import annotations
+from pathlib import Path
+import sys
+
+ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "gateway"))
+
+from multihub_gateway.providers.eodhd import EodhdProvider
+from multihub_gateway.providers.open_meteo import OpenMeteoProvider
+
+class FakeHttp:
+    def __init__(self, responses):
+        self.responses = list(responses)
+        self.urls = []
+
+    def get_json(self, url, timeout=30.0):
+        self.urls.append(url)
+        return self.responses.pop(0)
+
+def test_eodhd_search_is_dynamic_not_fixed():
+    fake = FakeHttp([[
+        {"Code": "CDR", "Name": "CD PROJEKT SA", "Currency": "PLN",
+         "Type": "Common Stock", "Isin": "PLOPTTC00011"},
+        {"Code": "YOS", "Name": "Yoshi Innovation SA", "Currency": "PLN",
+         "Type": "Common Stock", "Isin": "PLTEST000001"},
+    ]])
+    p = EodhdProvider("secret", fake)
+    items = p.search("WAR", "yoshi")
+    assert len(items) == 1
+    assert items[0].symbol == "YOS.WAR"
+    assert "exchange-symbol-list/WAR" in fake.urls[0]
+
+def test_crypto_catalog_uses_cc():
+    fake = FakeHttp([[
+        {"Code": "BTC-USD", "Name": "Bitcoin USD", "Currency": "USD",
+         "Type": "Currency", "Isin": None}
+    ]])
+    p = EodhdProvider("secret", fake)
+    items = p.search("CC", "bitcoin")
+    assert items[0].symbol == "BTC-USD.CC"
+    assert "exchange-symbol-list/CC" in fake.urls[0]
+
+def test_quote_normalization():
+    fake = FakeHttp([{
+        "code": "CDR.WAR",
+        "close": 321.5,
+        "open": 318.0,
+        "high": 325.0,
+        "low": 315.0,
+        "previousClose": 319.0,
+        "change": 2.5,
+        "change_p": 0.78,
+        "timestamp": 1234567890,
+    }])
+    p = EodhdProvider("secret", fake)
+    q = p.quote("CDR.WAR")
+    assert q.price == 321.5
+    assert q.timestamp == 1234567890
+    assert "real-time/CDR.WAR" in fake.urls[0]
+
+def test_weather_geocode_and_current():
+    fake = FakeHttp([
+        {"results": [{
+            "name": "Katowice", "country": "Polska",
+            "latitude": 50.25, "longitude": 19.02,
+            "timezone": "Europe/Warsaw"
+        }]},
+        {"current": {
+            "temperature_2m": 14.2,
+            "apparent_temperature": 13.7,
+            "relative_humidity_2m": 71,
+            "precipitation": 0.0,
+            "weather_code": 2,
+            "wind_speed_10m": 8.4,
+            "time": "2026-09-23T06:30",
+        }},
+    ])
+    p = OpenMeteoProvider(fake)
+    w = p.weather_for_city("Katowice")
+    assert w.place.name == "Katowice"
+    assert w.temperature_c == 14.2
+    assert w.humidity_percent == 71.0

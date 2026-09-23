@@ -1,0 +1,30 @@
+{
+  "project": "X4 MultiHub",
+  "version": "0.1-dev",
+  "status": "DEVELOPMENT",
+  "base": {
+    "project": "CrossPoint Reader",
+    "release": "1.6.0",
+    "commit": "54337e6d73fc628f4ba523ddc89a743ca8c6e4c5",
+    "environment": "gh_release"
+  },
+  "implemented": [
+    "MultiHub Home entry",
+    "MultiHub shell",
+    "fail-closed CI build verification",
+    "EODHD gateway provider foundation",
+    "Open-Meteo gateway provider foundation"
+  ],
+  "not_implemented": [
+    "Reader integration from MultiHub",
+    "Field Manual",
+    "Daily Planner",
+    "X4 market favorites",
+    "Markets UI",
+    "Dashboard UI",
+    "MultiHub Settings UI"
+  ],
+  "automatic_flash": false,
+  "automatic_erase": false,
+  "physical_device_verified": false
+}
