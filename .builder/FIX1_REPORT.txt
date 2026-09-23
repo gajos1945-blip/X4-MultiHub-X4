@@ -1,0 +1,18 @@
+X4 MultiHub v0.1-dev-fix1
+=========================
+
+Problem:
+GitHub Actions stopped at "Run Python tests":
+  No module named pytest
+
+Cause:
+pytest was not installed in the GitHub-hosted Python environment.
+
+Fix:
+Added:
+  uv pip install --system pytest
+before:
+  python -m pytest -q
+
+No firmware functionality, flash size, application offset or partition data
+was changed. This patch only repairs the CI test environment.

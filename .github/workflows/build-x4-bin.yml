@@ -48,6 +48,9 @@ jobs:
             "esp-idf-size>=2.0.0" \
             "esp-coredump>=1.14.0"
 
+      - name: Install test dependencies
+        run: uv pip install --system pytest
+
       - name: Run Python tests
         run: python -m pytest -q
 
