@@ -32,11 +32,13 @@
 - [DEFERRED] automatic Today from RTC/NTP until device clock behavior is verified
 
 ## v0.5-dev — Markets
-- gateway URL setting
-- WAR/CC/FOREX search
-- favorites on microSD
-- quotes and timestamps
-- explicit DATA UNAVAILABLE handling
+- [DONE] gateway URL setting inside Markets
+- [DONE] WAR/CC/FOREX dynamic search
+- [DONE] favorites on microSD
+- [DONE] batch quote refresh
+- [DONE] price/change/timestamp transport from gateway
+- [DONE] explicit DATA UNAVAILABLE handling
+- [DONE] no fixed stock/crypto whitelist in firmware
 
 ## v0.6-dev — Weather + Dashboard
 - city search / coordinates

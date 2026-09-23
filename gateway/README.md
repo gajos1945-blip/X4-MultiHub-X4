@@ -25,6 +25,7 @@ START_GATEWAY_WINDOWS.cmd
 - `GET /v1/search?asset=pl&q=cd`
 - `GET /v1/search?asset=crypto&q=bitcoin`
 - `GET /v1/quote?symbol=CDR.WAR`
+- `GET /v1/quotes?symbols=CDR.WAR,BTC-USD.CC`
 - `GET /v1/weather?city=Katowice`
 
 The gateway returns normalized JSON. The X4 firmware never needs to know the

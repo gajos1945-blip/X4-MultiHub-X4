@@ -80,3 +80,32 @@ def test_weather_geocode_and_current():
     assert w.place.name == "Katowice"
     assert w.temperature_c == 14.2
     assert w.humidity_percent == 71.0
+
+
+def test_batch_quotes_use_eodhd_s_parameter():
+    fake = FakeHttp([[
+        {
+            "code": "CDR.WAR", "close": 300.0, "change_p": 1.0,
+            "timestamp": 100, "open": 295.0, "high": 301.0, "low": 294.0,
+            "previousClose": 297.0,
+        },
+        {
+            "code": "BTC-USD.CC", "close": 100000.0, "change_p": -0.5,
+            "timestamp": 101, "open": 101000.0, "high": 102000.0, "low": 99000.0,
+            "previousClose": 100500.0,
+        },
+    ]])
+    p = EodhdProvider("secret", fake)
+    rows = p.quotes(["CDR.WAR", "BTC-USD.CC"])
+    assert [x.symbol for x in rows] == ["CDR.WAR", "BTC-USD.CC"]
+    assert "real-time/CDR.WAR" in fake.urls[0]
+    assert "s=BTC-USD.CC" in fake.urls[0]
+
+def test_batch_quotes_reject_too_many_symbols():
+    fake = FakeHttp([])
+    p = EodhdProvider("secret", fake)
+    try:
+        p.quotes([f"X{i}.WAR" for i in range(21)])
+        assert False, "should reject >20 symbols"
+    except ValueError:
+        pass

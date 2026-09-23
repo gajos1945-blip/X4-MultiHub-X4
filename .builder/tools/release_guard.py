@@ -18,8 +18,14 @@ REQUIRED_MARKERS = (
     b"Dodaj zadanie",
     b"Zadania / priorytety / notatki",
     b"Markets & Weather",
+    b"Gateway http://IP:8788",
+    b"DATA UNAVAILABLE",
+    b"Odswiez notowania",
+    b"Szukaj i dodaj",
+    b"X4 Data Gateway",
+    b"GPW / NewConnect / Crypto / FX",
     b"Dashboard",
-    b"NOT IMPLEMENTED v0.4",
+    b"NOT IMPLEMENTED v0.5",
 )
 
 def verify_required_markers(path: Path) -> list[str]:

@@ -56,6 +56,12 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, SERVICE.quote(symbol))
                 return
 
+            if parsed.path == "/v1/quotes":
+                raw = query.get("symbols", [""])[0]
+                symbols = [x for x in raw.split(",") if x]
+                self.send_json(200, SERVICE.quotes(symbols))
+                return
+
             if parsed.path == "/v1/weather":
                 city = query.get("city", [""])[0]
                 self.send_json(200, SERVICE.weather_for_city(city))

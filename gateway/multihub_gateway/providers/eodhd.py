@@ -92,6 +92,69 @@ class EodhdProvider:
         ))
         return matches[:max(1, min(limit, 100))]
 
+
+    def quotes(self, symbols: list[str]) -> list[Quote]:
+        clean: list[str] = []
+        seen: set[str] = set()
+        for raw in symbols:
+            symbol = raw.strip().upper()
+            if not symbol or "." not in symbol or symbol in seen:
+                continue
+            seen.add(symbol)
+            clean.append(symbol)
+        if not clean:
+            return []
+        if len(clean) > 20:
+            raise ValueError("maximum 20 symbols per batch")
+
+        first, *rest = clean
+        params: dict[str, str] = {}
+        if rest:
+            params["s"] = ",".join(rest)
+
+        data = self.http.get_json(
+            self._url(f"real-time/{urllib.parse.quote(first, safe='.-')}", **params)
+        )
+        rows = data if isinstance(data, list) else [data]
+        result: list[Quote] = []
+
+        for row in rows:
+            if not isinstance(row, dict):
+                continue
+
+            def number(name: str) -> float | None:
+                value = row.get(name)
+                if value is None or value == "":
+                    return None
+                try:
+                    return float(value)
+                except (TypeError, ValueError):
+                    return None
+
+            ts = row.get("timestamp")
+            try:
+                timestamp = int(ts) if ts is not None else None
+            except (TypeError, ValueError):
+                timestamp = None
+
+            code = str(row.get("code") or "").strip().upper()
+            if not code:
+                continue
+            result.append(
+                Quote(
+                    symbol=code,
+                    price=number("close"),
+                    open=number("open"),
+                    high=number("high"),
+                    low=number("low"),
+                    previous_close=number("previousClose"),
+                    change=number("change"),
+                    change_p=number("change_p"),
+                    timestamp=timestamp,
+                )
+            )
+        return result
+
     def quote(self, symbol: str) -> Quote:
         symbol = symbol.strip().upper()
         if not symbol or "." not in symbol:

@@ -30,6 +30,37 @@ class MultiHubService:
     def quote(self, symbol: str) -> dict:
         return asdict(self.eodhd.quote(symbol))
 
+    def quotes(self, symbols: list[str]) -> dict:
+        clean = [x.strip().upper() for x in symbols if x.strip()]
+        if not clean:
+            return {"quotes": []}
+        if len(clean) > 20:
+            raise ValueError("maximum 20 symbols per batch")
+
+        found = {q.symbol: q for q in self.eodhd.quotes(clean)}
+        rows = []
+        for symbol in clean:
+            quote = found.get(symbol)
+            if quote is None:
+                rows.append({
+                    "symbol": symbol,
+                    "available": False,
+                    "price": None,
+                    "change_p": None,
+                    "timestamp": None,
+                    "provider": "EODHD",
+                })
+            else:
+                rows.append({
+                    "symbol": quote.symbol,
+                    "available": quote.price is not None,
+                    "price": quote.price,
+                    "change_p": quote.change_p,
+                    "timestamp": quote.timestamp,
+                    "provider": quote.provider,
+                })
+        return {"quotes": rows}
+
     def weather_for_city(self, city: str) -> dict:
         value = asdict(self.weather.weather_for_city(city))
         return value

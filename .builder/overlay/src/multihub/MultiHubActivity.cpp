@@ -7,6 +7,7 @@
 #include "activities/ActivityManager.h"
 #include "FieldManualActivity.h"
 #include "DailyPlannerActivity.h"
+#include "MarketsActivity.h"
 
 namespace fui = freeink::ui;
 
@@ -30,9 +31,9 @@ void MultiHubActivity::rebuildRows() {
   values[0] = "Otworz biblioteke / pliki";
   values[1] = "Manuale offline / checklisty";
   values[2] = "Zadania / priorytety / notatki";
-  values[3] = "NOT IMPLEMENTED v0.4";
-  values[4] = "NOT IMPLEMENTED v0.4";
-  values[5] = "NOT IMPLEMENTED v0.4";
+  values[3] = "GPW / NewConnect / Crypto / FX";
+  values[4] = "NOT IMPLEMENTED v0.5";
+  values[5] = "NOT IMPLEMENTED v0.5";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -64,13 +65,18 @@ void MultiHubActivity::activateIndex(const int index) {
           });
       return;
     case 3:
-      header = "Markets & Weather - NOT IMPLEMENTED v0.4";
-      break;
+      startActivityForResult(
+          std::make_unique<MarketsActivity>(renderer, mappedInput),
+          [this](const ActivityResult&) {
+            rebuildRows();
+            requestUpdate();
+          });
+      return;
     case 4:
-      header = "Dashboard - NOT IMPLEMENTED v0.4";
+      header = "Dashboard - NOT IMPLEMENTED v0.5";
       break;
     case 5:
-      header = "Ustawienia - NOT IMPLEMENTED v0.4";
+      header = "Ustawienia - NOT IMPLEMENTED v0.5";
       break;
     default:
       return;

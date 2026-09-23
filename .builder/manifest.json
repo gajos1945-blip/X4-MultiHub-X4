@@ -1,6 +1,6 @@
 {
   "project": "X4 MultiHub",
-  "version": "0.4-dev",
+  "version": "0.5-dev",
   "status": "DEVELOPMENT",
   "base": {
     "project": "CrossPoint Reader",
@@ -9,26 +9,28 @@
     "environment": "gh_release"
   },
   "implemented": [
-    "MultiHub Home entry",
-    "MultiHub shell",
-    "Reader entry routes into stock CrossPoint file browser / reader workflow",
-    "Field Manual microSD index rooted at /Manuals",
-    "Field Manual dynamic categories, search, favorites and checklists",
-    "Daily Planner persistent JSONL task store",
-    "Daily Planner manually selected active date with previous/next day navigation",
-    "Daily Planner add/toggle/delete tasks",
-    "Daily Planner open/all/done views",
-    "Daily Planner task priority, title, note and date editing",
+    "MultiHub Home entry and shell",
+    "Reader integration",
+    "Field Manual",
+    "Daily Planner",
+    "Markets UI with dynamic GPW/NewConnect, crypto and FX search via X4 Data Gateway",
+    "Market favorites persisted on microSD",
+    "Dynamic provider symbols; no fixed stock/crypto list in firmware",
+    "Batch quote refresh through gateway",
+    "Explicit DATA UNAVAILABLE state for missing quotes",
+    "EODHD WAR/CC/FOREX provider foundation",
+    "EODHD multi-symbol delayed quote request support",
+    "Open-Meteo provider foundation",
     "fail-closed CI build verification",
-    "EODHD gateway provider foundation",
-    "Open-Meteo gateway provider foundation"
+    "Reader entry routes into stock CrossPoint file browser / reader workflow",
+    "Field Manual microSD index rooted at /Manuals"
   ],
   "not_implemented": [
-    "Automatic Today date from device RTC/NTP",
-    "X4 market favorites",
-    "Markets UI",
+    "Weather UI on X4",
     "Dashboard UI",
-    "MultiHub Settings UI"
+    "MultiHub Settings UI",
+    "Automatic Today date from device RTC/NTP",
+    "Provider-specific licensing/plan detection on X4"
   ],
   "automatic_flash": false,
   "automatic_erase": false,
