@@ -3,7 +3,7 @@ from pathlib import Path
 
 REQUIRED_MARKERS = (
     b"X4 MultiHub",
-    b"X4 MultiHub 0.9-rc1",
+    b"X4 MultiHub 1.0.0-rc1",
     b"Wyczysc caly cache",
     b"Wyczysc cache pogody",
     b"Wyczysc cache rynkow",

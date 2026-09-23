@@ -67,8 +67,8 @@ def test_rc_source_audit_passes_current_tree():
 
 def test_rc_build_manifest_contract():
     source = (ROOT / ".builder/build_ci.py").read_text(encoding="utf-8")
-    assert '"version": "0.9-rc1"' in source
-    assert '"release_status": "RELEASE_CANDIDATE_HARDWARE_UNVERIFIED"' in source
+    assert '"version": "1.0.0-rc1"' in source
+    assert '"release_status": "FINAL_SOFTWARE_RELEASE_CANDIDATE_HARDWARE_UNVERIFIED"' in source
     assert '"image_integrity_verified": True' in source
     assert '"application_partition_spare_bytes": partition_spare' in source
     assert '"merged_full_flash": False' in source
@@ -76,22 +76,22 @@ def test_rc_build_manifest_contract():
 
 def test_rc_workflow_and_filename():
     workflow = (ROOT / ".github/workflows/build-x4-bin.yml").read_text(encoding="utf-8")
-    assert "BUILD X4 MULTIHUB RC BIN" in workflow
-    assert "X4_MultiHub_X4_v0_9_rc1" in workflow
-    assert "X4_MultiHub_X4_v0.9-rc1.bin" in workflow
+    assert "BUILD X4 MULTIHUB FINAL RC BIN" in workflow
+    assert "X4_MultiHub_X4_v1_0_0_rc1" in workflow
+    assert "X4_MultiHub_X4_v1.0.0-rc1.bin" in workflow
 
 
 def test_rc_settings_version_string():
     source = (ROOT / ".builder/overlay/src/multihub/MultiHubSettingsActivity.cpp").read_text(
         encoding="utf-8"
     )
-    assert "X4 MultiHub 0.9-rc1" in source
+    assert "X4 MultiHub 1.0.0-rc1" in source
     assert "0.8-dev" not in source
 
 
 def test_manifest_keeps_physical_hardware_unverified():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "0.9-rc1"
+    assert data["version"] == "1.0.0-rc1"
     assert data["physical_device_verified"] is False
     assert data["automatic_erase"] is False
     assert data["automatic_flash"] is False

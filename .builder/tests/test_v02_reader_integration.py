@@ -15,12 +15,12 @@ def test_activity_manager_include_present():
 
 def test_v02_manifest_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "0.9-rc1"
+    assert data["version"] == "1.0.0-rc1"
     assert any("Reader entry routes" in x for x in data["implemented"])
     assert any("Field Manual" in x for x in data["implemented"])
     assert data["physical_device_verified"] is False
 
 def test_v02_workflow_artifact_name():
     workflow = (ROOT / ".github/workflows/build-x4-bin.yml").read_text(encoding="utf-8")
-    assert "X4_MultiHub_X4_v0_9_rc1" in workflow
-    assert "X4_MultiHub_X4_v0.9-rc1.bin" in workflow
+    assert "X4_MultiHub_X4_v1_0_0_rc1" in workflow
+    assert "X4_MultiHub_X4_v1.0.0-rc1.bin" in workflow

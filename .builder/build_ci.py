@@ -20,7 +20,7 @@ from rc_audit import audit_repository
 UPSTREAM = "https://github.com/crosspoint-reader/crosspoint-reader.git"
 COMMIT = "54337e6d73fc628f4ba523ddc89a743ca8c6e4c5"
 ENV = "gh_release"
-RELEASE_NAME = "X4_MultiHub_X4_v0.9-rc1.bin"
+RELEASE_NAME = "X4_MultiHub_X4_v1.0.0-rc1.bin"
 
 class BuildError(RuntimeError):
     pass
@@ -160,23 +160,41 @@ def main() -> int:
     print("=== 7/8 Create release candidate artifact ===")
     final_bin = dist / RELEASE_NAME
     shutil.copy2(fw, final_bin)
+
+    custom_bin = dist / "Custom.bin"
+    shutil.copy2(fw, custom_bin)
+
     sha = hashlib.sha256(final_bin.read_bytes()).hexdigest()
+    custom_sha = hashlib.sha256(custom_bin.read_bytes()).hexdigest()
+    if custom_sha != sha:
+        raise BuildError("Custom.bin alias hash differs from release BIN")
+
     (dist / (RELEASE_NAME + ".sha256.txt")).write_text(
         f"{sha}  {RELEASE_NAME}\n", encoding="ascii"
+    )
+    (dist / "Custom.bin.sha256.txt").write_text(
+        f"{custom_sha}  Custom.bin\n", encoding="ascii"
     )
 
     manifest = {
         "project": "X4 MultiHub",
-        "version": "0.9-rc1",
+        "version": "1.0.0-rc1",
         "base_release": "CrossPoint 1.6.0",
         "upstream_commit": COMMIT,
         "platformio_environment": ENV,
         "build_status": "SUCCESS",
         "build_seconds": elapsed,
         "artifact": {**info, "filename": RELEASE_NAME, "sha256": sha},
+        "custom_bin_alias": {
+            "filename": "Custom.bin",
+            "size": info["size"],
+            "sha256": custom_sha,
+            "byte_identical_to_release_bin": True,
+        },
         "source_facts": report,
         "application_partition": app_partition,
-        "release_status": "RELEASE_CANDIDATE_HARDWARE_UNVERIFIED",
+        "release_status": "FINAL_SOFTWARE_RELEASE_CANDIDATE_HARDWARE_UNVERIFIED",
+        "software_feature_complete": True,
         "image_integrity_verified": True,
         "application_partition_spare_bytes": partition_spare,
         "rc_source_audit_verified": True,
@@ -189,9 +207,23 @@ def main() -> int:
         json.dumps(manifest, indent=2) + "\n", encoding="utf-8"
     )
 
+    (dist / "FINAL_STATUS.txt").write_text(
+        "X4 MultiHub v1.0.0-rc1\n"
+        "SOFTWARE FEATURE COMPLETE: YES\n"
+        "PHYSICAL X4 VERIFIED: NO\n"
+        "IMAGE TYPE: APPLICATION BIN\n"
+        "MERGED/FULL FLASH: NO\n"
+        "AUTOMATIC ERASE: NO\n"
+        f"SHA-256: {sha}\n",
+        encoding="utf-8",
+    )
+
     print("=== 8/8 DONE ===")
     print("BIN:", final_bin)
+    print("CUSTOM ALIAS:", custom_bin)
     print("SHA-256:", sha)
+    print("Software feature set: COMPLETE")
+    print("Physical X4 validation: NOT RUN")
     print("This workflow does NOT flash or erase any device.")
     return 0
 

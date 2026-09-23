@@ -1,35 +1,28 @@
-# Etap 9 — X4 MultiHub v0.9-rc1
-
-To jest pierwszy release candidate.
+# Finalny etap — X4 MultiHub v1.0.0-rc1
 
 1. Rozpakuj ZIP.
 2. Skopiuj cala zawartosc do repo `X4-MultiHub-X4`.
 3. Potwierdz nadpisanie.
 4. GitHub Desktop -> Summary:
-   `X4 MultiHub v0.9-rc1 release candidate`
+   `X4 MultiHub v1.0.0-rc1 final software candidate`
 5. Commit to main.
 6. Push origin.
 7. GitHub -> Actions.
-8. Workflow nazywa sie teraz:
-   `BUILD X4 MULTIHUB RC BIN`
+8. Workflow:
+   `BUILD X4 MULTIHUB FINAL RC BIN`
 9. Po Success pobierz artifact:
-   `X4_MultiHub_X4_v0_9_rc1`
+   `X4_MultiHub_X4_v1_0_0_rc1`
 
-Oczekiwany BIN:
-`X4_MultiHub_X4_v0.9-rc1.bin`
+W artifact:
+- X4_MultiHub_X4_v1.0.0-rc1.bin
+- X4_MultiHub_X4_v1.0.0-rc1.bin.sha256.txt
+- Custom.bin
+- Custom.bin.sha256.txt
+- build_manifest.json
+- source_report.json
+- FINAL_STATUS.txt
 
-RC dodaje dodatkowe bramki:
-- audit zrodel,
-- brak automatycznego erase_flash,
-- pelna analiza struktury ESP BIN,
-- wewnetrzny checksum ESP,
-- appended SHA-256,
-- brak dodatkowego ogona danych,
-- wszystkie markery funkcji w finalnym BIN,
-- fit do potwierdzonej partycji aplikacji,
-- raport wolnego miejsca.
+Custom.bin i nazwany release BIN musza miec identyczny SHA-256.
 
-To nadal jest APPLICATION BIN, nie merged/full-flash BIN.
-
-Status fizycznego X4 pozostaje:
-HARDWARE UNVERIFIED
+To APPLICATION BIN, nie merged/full-flash.
+Status fizycznego X4 pozostaje HARDWARE UNVERIFIED do czasu testu urzadzenia.

@@ -81,3 +81,13 @@
 
 ## v1.0.0
 Only after physical X4 validation.
+
+## v1.0.0-rc1 — final software candidate
+- [DONE] software feature set complete
+- [DONE] final RC packaging
+- [DONE] Custom.bin byte-identical alias
+- [DONE] static integrity and partition gates
+- [WAITING] physical X4 validation
+
+## v1.0.0 stable
+Only after physical X4 validation.
