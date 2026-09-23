@@ -57,10 +57,10 @@ def test_markets_ui_has_dynamic_asset_modes_and_unavailable_state():
 
 def test_v05_manifest_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "0.5-dev"
+    assert data["version"] == "0.6-dev"
     assert any("Markets UI" in x for x in data["implemented"])
-    assert "Weather UI on X4" in data["not_implemented"]
-    assert "Dashboard UI" in data["not_implemented"]
+    assert any("Weather UI" in x for x in data["implemented"])
+    assert any("Dashboard combining" in x for x in data["implemented"])
     assert data["physical_device_verified"] is False
 
 def test_release_guard_requires_market_runtime_markers():

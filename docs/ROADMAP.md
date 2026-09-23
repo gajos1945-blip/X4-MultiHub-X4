@@ -41,10 +41,12 @@
 - [DONE] no fixed stock/crypto whitelist in firmware
 
 ## v0.6-dev — Weather + Dashboard
-- city search / coordinates
-- Open-Meteo current conditions
-- dashboard cards
-- custom ordering
+- [DONE] city query through Open-Meteo geocoding on gateway
+- [DONE] current conditions
+- [DONE] 4-day forecast
+- [DONE] Dashboard cards for Weather / Markets / Planner
+- [DONE] persistent card visibility
+- [DONE] custom card ordering on device
 
 ## v0.7-dev — resilience
 - cache

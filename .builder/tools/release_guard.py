@@ -25,7 +25,14 @@ REQUIRED_MARKERS = (
     b"X4 Data Gateway",
     b"GPW / NewConnect / Crypto / FX",
     b"Dashboard",
-    b"NOT IMPLEMENTED v0.5",
+    b"Show/Hide | Hold: up",
+    b"Odswiez Dashboard",
+    b"Uklad Dashboard",
+    b"Wilgotnosc",
+    b"Odswiez pogode",
+    b"Open-Meteo przez Gateway",
+    b"Pogoda / Rynki / Planner",
+    b"NOT IMPLEMENTED v0.6",
 )
 
 def verify_required_markers(path: Path) -> list[str]:

@@ -109,3 +109,38 @@ def test_batch_quotes_reject_too_many_symbols():
         assert False, "should reject >20 symbols"
     except ValueError:
         pass
+
+
+def test_weather_forecast_is_transported():
+    fake = FakeHttp([
+        {"results": [{
+            "name": "Katowice", "country": "Polska",
+            "latitude": 50.25, "longitude": 19.02,
+            "timezone": "Europe/Warsaw"
+        }]},
+        {
+            "current": {
+                "temperature_2m": 14.2,
+                "apparent_temperature": 13.7,
+                "relative_humidity_2m": 71,
+                "precipitation": 0.0,
+                "weather_code": 2,
+                "wind_speed_10m": 8.4,
+                "time": "2026-09-23T11:30",
+            },
+            "daily": {
+                "time": ["2026-09-23", "2026-09-24", "2026-09-25"],
+                "weather_code": [2, 3, 61],
+                "temperature_2m_min": [9.0, 8.0, 7.0],
+                "temperature_2m_max": [16.0, 15.0, 13.0],
+                "precipitation_probability_max": [10, 20, 70],
+            },
+        },
+    ])
+    p = OpenMeteoProvider(fake)
+    w = p.weather_for_city("Katowice")
+    assert len(w.forecast) == 3
+    assert w.forecast[0].max_c == 16.0
+    assert w.forecast[2].weather_code == 61
+    assert "daily=" in fake.urls[1]
+    assert "forecast_days=4" in fake.urls[1]

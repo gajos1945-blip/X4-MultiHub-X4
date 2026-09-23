@@ -19,7 +19,7 @@ from release_guard import verify_required_markers
 UPSTREAM = "https://github.com/crosspoint-reader/crosspoint-reader.git"
 COMMIT = "54337e6d73fc628f4ba523ddc89a743ca8c6e4c5"
 ENV = "gh_release"
-RELEASE_NAME = "X4_MultiHub_X4_v0.5-dev.bin"
+RELEASE_NAME = "X4_MultiHub_X4_v0.6-dev.bin"
 
 class BuildError(RuntimeError):
     pass
@@ -140,7 +140,7 @@ def main() -> int:
 
     manifest = {
         "project": "X4 MultiHub",
-        "version": "0.5-dev",
+        "version": "0.6-dev",
         "base_release": "CrossPoint 1.6.0",
         "upstream_commit": COMMIT,
         "platformio_environment": ENV,

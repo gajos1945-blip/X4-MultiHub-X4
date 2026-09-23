@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import urllib.parse
 
 from ..http_client import JsonHttpClient
@@ -13,6 +13,14 @@ class Place:
     timezone: str
 
 @dataclass(frozen=True)
+class ForecastDay:
+    date: str
+    weather_code: int | None
+    min_c: float | None
+    max_c: float | None
+    precipitation_probability_max: float | None
+
+@dataclass(frozen=True)
 class CurrentWeather:
     place: Place
     temperature_c: float | None
@@ -23,6 +31,7 @@ class CurrentWeather:
     weather_code: int | None
     observed_at: str | None
     provider: str = "Open-Meteo"
+    forecast: list[ForecastDay] = field(default_factory=list)
 
 class OpenMeteoProvider:
     def __init__(self, http: JsonHttpClient | None = None):
@@ -70,6 +79,13 @@ class OpenMeteoProvider:
                 "weather_code",
                 "wind_speed_10m",
             ]),
+            "daily": ",".join([
+                "weather_code",
+                "temperature_2m_min",
+                "temperature_2m_max",
+                "precipitation_probability_max",
+            ]),
+            "forecast_days": 4,
             "timezone": "auto",
         })
         data = self.http.get_json(f"https://api.open-meteo.com/v1/forecast?{query}")
@@ -90,6 +106,44 @@ class OpenMeteoProvider:
         except (TypeError, ValueError):
             weather_code = None
 
+        daily = data.get("daily", {}) if isinstance(data, dict) else {}
+        dates = daily.get("time", []) if isinstance(daily, dict) else []
+        codes = daily.get("weather_code", []) if isinstance(daily, dict) else []
+        mins = daily.get("temperature_2m_min", []) if isinstance(daily, dict) else []
+        maxs = daily.get("temperature_2m_max", []) if isinstance(daily, dict) else []
+        pops = daily.get("precipitation_probability_max", []) if isinstance(daily, dict) else []
+
+        forecast: list[ForecastDay] = []
+        count = min(len(dates), 4)
+        for i in range(count):
+            def at(values, index):
+                try:
+                    return values[index]
+                except (IndexError, TypeError):
+                    return None
+
+            def float_or_none(value):
+                try:
+                    return float(value) if value is not None else None
+                except (TypeError, ValueError):
+                    return None
+
+            raw_code = at(codes, i)
+            try:
+                day_code = int(raw_code) if raw_code is not None else None
+            except (TypeError, ValueError):
+                day_code = None
+
+            forecast.append(
+                ForecastDay(
+                    date=str(at(dates, i) or ""),
+                    weather_code=day_code,
+                    min_c=float_or_none(at(mins, i)),
+                    max_c=float_or_none(at(maxs, i)),
+                    precipitation_probability_max=float_or_none(at(pops, i)),
+                )
+            )
+
         return CurrentWeather(
             place=place,
             temperature_c=number("temperature_2m"),
@@ -99,6 +153,7 @@ class OpenMeteoProvider:
             wind_kmh=number("wind_speed_10m"),
             weather_code=weather_code,
             observed_at=str(current.get("time")) if current.get("time") else None,
+            forecast=forecast,
         )
 
     def weather_for_city(self, city: str) -> CurrentWeather:

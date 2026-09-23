@@ -1,6 +1,6 @@
 {
   "project": "X4 MultiHub",
-  "version": "0.5-dev",
+  "version": "0.6-dev",
   "status": "DEVELOPMENT",
   "base": {
     "project": "CrossPoint Reader",
@@ -23,14 +23,20 @@
     "Open-Meteo provider foundation",
     "fail-closed CI build verification",
     "Reader entry routes into stock CrossPoint file browser / reader workflow",
-    "Field Manual microSD index rooted at /Manuals"
+    "Field Manual microSD index rooted at /Manuals",
+    "Weather UI with city selection via Open-Meteo gateway",
+    "Current weather: temperature, apparent temperature, humidity, precipitation, wind and WMO code",
+    "Four-day weather forecast transported by gateway",
+    "Dashboard combining Weather, Markets and Planner",
+    "Dashboard persistent card visibility and ordering",
+    "Dashboard card order editable on-device; long press moves card up"
   ],
   "not_implemented": [
-    "Weather UI on X4",
-    "Dashboard UI",
-    "MultiHub Settings UI",
+    "Offline cache / stale-data fallback for Markets and Weather",
+    "Retry/backoff policy beyond single request",
+    "MultiHub Settings central screen",
     "Automatic Today date from device RTC/NTP",
-    "Provider-specific licensing/plan detection on X4"
+    "Reader current-book progress card on Dashboard"
   ],
   "automatic_flash": false,
   "automatic_erase": false,
