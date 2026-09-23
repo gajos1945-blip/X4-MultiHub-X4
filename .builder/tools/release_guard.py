@@ -3,8 +3,17 @@ from pathlib import Path
 
 REQUIRED_MARKERS = (
     b"X4 MultiHub",
+    b"X4 MultiHub 0.8-dev",
+    b"Wyczysc caly cache",
+    b"Wyczysc cache pogody",
+    b"Wyczysc cache rynkow",
+    b"Ustawienia MultiHub",
+    b"Gateway / Pogoda / Cache / Dashboard",
+    b"Planer",
+    b"Instrukcje",
+    b"Czytnik",
     b"Reader",
-    b"Otworz biblioteke / pliki",
+    b"Biblioteka i pliki",
     b"Field Manual",
     b"Manuale offline / checklisty",
     b"Checklist",
@@ -36,7 +45,6 @@ REQUIRED_MARKERS = (
     b"Odswiez pogode",
     b"Open-Meteo przez Gateway",
     b"Pogoda / Rynki / Planner",
-    b"NOT IMPLEMENTED v0.7",
 )
 
 def verify_required_markers(path: Path) -> list[str]:

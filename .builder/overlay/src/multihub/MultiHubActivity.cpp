@@ -10,15 +10,16 @@
 #include "MarketsActivity.h"
 #include "WeatherActivity.h"
 #include "DashboardActivity.h"
+#include "MultiHubSettingsActivity.h"
 
 namespace fui = freeink::ui;
 
 namespace {
 const char* LABELS[MultiHubActivity::ROWS] = {
-    "Reader",
-    "Field Manual",
-    "Daily Planner",
-    "Markets",
+    "Czytnik",
+    "Instrukcje",
+    "Planer",
+    "Rynki",
     "Pogoda",
     "Dashboard",
     "Ustawienia",
@@ -31,13 +32,13 @@ void MultiHubActivity::onEnter() {
 }
 
 void MultiHubActivity::rebuildRows() {
-  values[0] = "Otworz biblioteke / pliki";
+  values[0] = "Biblioteka i pliki";
   values[1] = "Manuale offline / checklisty";
   values[2] = "Zadania / priorytety / notatki";
   values[3] = "GPW / NewConnect / Crypto / FX";
   values[4] = "Open-Meteo przez Gateway";
   values[5] = "Pogoda / Rynki / Planner";
-  values[6] = "NOT IMPLEMENTED v0.7";
+  values[6] = "Gateway / Pogoda / Cache / Dashboard";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -93,8 +94,13 @@ void MultiHubActivity::activateIndex(const int index) {
           });
       return;
     case 6:
-      header = "Ustawienia - NOT IMPLEMENTED v0.7";
-      break;
+      startActivityForResult(
+          std::make_unique<MultiHubSettingsActivity>(renderer, mappedInput),
+          [this](const ActivityResult&) {
+            rebuildRows();
+            requestUpdate();
+          });
+      return;
     default:
       return;
   }

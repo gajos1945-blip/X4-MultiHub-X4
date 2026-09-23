@@ -144,7 +144,7 @@ def apply(repo: Path, overlay: Path) -> None:
     if dest.exists():
         raise PatchError(f"{dest} already exists; refusing to overwrite")
     shutil.copytree(overlay / "src/multihub", dest)
-    print("X4 MultiHub v0.7-dev patch applied safely.")
+    print("X4 MultiHub v0.8-dev patch applied safely.")
 
 def main() -> int:
     ap = argparse.ArgumentParser()

@@ -59,10 +59,14 @@
 - [DEFERRED] elapsed cache age until RTC/NTP is hardware-verified
 
 ## v0.8-dev — UX polish
-- Polish strings
-- e-ink refresh optimization
-- icons/layout
-- navigation consistency
+- [DONE] Polish-oriented main-menu wording (ASCII-safe until font validation)
+- [DONE] central MultiHub Settings
+- [DONE] gateway/city/planner date in one place
+- [DONE] Dashboard layout entry from Settings
+- [DONE] cache clearing controls
+- [DONE] Wi-Fi status and About/version row
+- [DONE] navigation consistency for all main modules
+- [DEFERRED] full Polish diacritics until physical font rendering is verified
 
 ## v0.9-rc
 - integration tests
