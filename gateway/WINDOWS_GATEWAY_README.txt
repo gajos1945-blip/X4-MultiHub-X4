@@ -1,4 +1,4 @@
-X4 Data Gateway 1.6 — Windows
+X4 Data Gateway 1.7 — Windows
 
 Artifact:
   X4DataGateway.exe
@@ -41,3 +41,7 @@ Wazne ograniczenie:
 
 Windows Firewall moze przy pierwszym uruchomieniu poprosic o zgode.
 Zezwalaj tylko dla zaufanej sieci prywatnej/LAN.
+
+
+Diagnostyka v1.7:
+- `GET /v1/ping` jest lokalnym testem auth i nie wywoluje zewnetrznych providerow.

@@ -147,3 +147,15 @@ Only after physical X4 validation.
 - [DONE] DPAPI protection for both Windows-side secrets
 - [LIMITATION] HTTP LAN transport is not encrypted
 - [DEFERRED] TLS between X4 and gateway
+
+
+## v1.7-dev — Diagnostics
+- [DONE] Wi-Fi / RSSI status
+- [DONE] Gateway `/health` test
+- [DONE] authenticated local `/v1/ping` token-match test
+- [DONE] microSD write/read/remove self-test
+- [DONE] local-time status
+- [DONE] diagnostics report export with token value redacted
+- [DONE] Windows Gateway "Test X4 auth"
+- [SAFE] `/v1/ping` never contacts external providers
+- [DEFERRED] remote diagnostics upload

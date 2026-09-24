@@ -1,4 +1,4 @@
-name: BUILD X4 MULTIHUB v1.6 DEV BIN
+name: BUILD X4 MULTIHUB v1.7 DEV BIN
 
 on:
   push:
@@ -57,14 +57,14 @@ jobs:
       - name: Build X4 MultiHub
         run: python .builder/build_ci.py
 
-      - name: Upload v1.6 development BIN
+      - name: Upload v1.7 development BIN
         uses: actions/upload-artifact@v4
         with:
-          name: X4_MultiHub_X4_v1_6_dev
+          name: X4_MultiHub_X4_v1_7_dev
           if-no-files-found: error
           path: |
-            dist/X4_MultiHub_X4_v1.6-dev.bin
-            dist/X4_MultiHub_X4_v1.6-dev.bin.sha256.txt
+            dist/X4_MultiHub_X4_v1.7-dev.bin
+            dist/X4_MultiHub_X4_v1.7-dev.bin.sha256.txt
             dist/build_manifest.json
             dist/source_report.json
             dist/DEV_STATUS.txt
@@ -102,7 +102,7 @@ jobs:
       - name: Upload Windows Gateway
         uses: actions/upload-artifact@v4
         with:
-          name: X4_Data_Gateway_Windows_v1_6_dev
+          name: X4_Data_Gateway_Windows_v1_7_dev
           if-no-files-found: error
           path: |
             gateway/dist/X4DataGateway.exe

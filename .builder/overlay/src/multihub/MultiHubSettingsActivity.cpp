@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "DataCache.h"
+#include "DiagnosticsActivity.h"
 #include "GatewayAuthStore.h"
 #include "DashboardSettingsActivity.h"
 #include "MarketStore.h"
@@ -29,6 +30,7 @@ const char* LABELS[MultiHubSettingsActivity::ROWS] = {
     "Czas / NTP / Today",
     "Uklad Dashboard",
     "Power Manager",
+    "Diagnostyka",
     "Wyczysc cache rynkow",
     "Wyczysc cache pogody",
     "Wyczysc caly cache",
@@ -61,10 +63,11 @@ void MultiHubSettingsActivity::rebuildRows() {
 
   values[6] = "Pogoda / Rynki / Planner";
   values[7] = "Siec / odswiezanie / Wi-Fi OFF";
-  values[8] = "market_quotes.json";
-  values[9] = "weather.json";
-  values[10] = "Rynki + Pogoda";
-  values[11] = "X4 MultiHub 1.6-dev";
+  values[8] = "Gateway / microSD / raport";
+  values[9] = "market_quotes.json";
+  values[10] = "weather.json";
+  values[11] = "Rynki + Pogoda";
+  values[12] = "X4 MultiHub 1.7-dev";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -188,6 +191,15 @@ void MultiHubSettingsActivity::openPowerManager() {
       });
 }
 
+void MultiHubSettingsActivity::openDiagnostics() {
+  startActivityForResult(
+      std::make_unique<DiagnosticsActivity>(renderer, mappedInput),
+      [this](const ActivityResult&) {
+        rebuildRows();
+        requestUpdate();
+      });
+}
+
 void MultiHubSettingsActivity::clearMarketCache() {
   header = DataCache::clearMarkets()
                ? "Cache rynkow wyczyszczony"
@@ -226,11 +238,12 @@ void MultiHubSettingsActivity::activateIndex(const int index) {
     case 5: openTimeSettings(); return;
     case 6: openDashboardLayout(); return;
     case 7: openPowerManager(); return;
-    case 8: clearMarketCache(); return;
-    case 9: clearWeatherCache(); return;
-    case 10: clearAllCache(); return;
-    case 11:
-      header = "X4 MultiHub 1.6-dev";
+    case 8: openDiagnostics(); return;
+    case 9: clearMarketCache(); return;
+    case 10: clearWeatherCache(); return;
+    case 11: clearAllCache(); return;
+    case 12:
+      header = "X4 MultiHub 1.7-dev";
       requestUpdate();
       return;
     default:

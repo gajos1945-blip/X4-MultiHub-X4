@@ -3,12 +3,12 @@ from pathlib import Path
 
 REQUIRED_MARKERS = (
     b"X4 MultiHub",
-    b"X4 MultiHub 1.6-dev",
+    b"X4 MultiHub 1.7-dev",
     b"Wyczysc caly cache",
     b"Wyczysc cache pogody",
     b"Wyczysc cache rynkow",
     b"Ustawienia MultiHub",
-    b"Gateway / Pogoda / Cache / Dashboard",
+    b"Gateway / Diagnostyka / Cache / Dashboard",
     b"Planer",
     b"Instrukcje",
     b"Czytnik",
@@ -68,6 +68,11 @@ REQUIRED_MARKERS = (
     b"Gateway access token",
     b"Gateway token zapisany",
     b"Gateway token usuniety",
+    b"Diagnostyka",
+    b"Gateway /health",
+    b"Gateway auth /v1/ping",
+    b"microSD write test",
+    b"Raport zapisany",
     b"Pogoda / Rynki / Planner",
 )
 

@@ -41,7 +41,7 @@ void MultiHubActivity::rebuildRows() {
   values[4] = "Open-Meteo przez Gateway";
   values[5] = "RSS / Atom / Ulubione";
   values[6] = "Pogoda / Rynki / Planner";
-  values[7] = "Gateway / Pogoda / Cache / Dashboard";
+  values[7] = "Gateway / Diagnostyka / Cache / Dashboard";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};

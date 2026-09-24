@@ -1,4 +1,4 @@
-# X4 Data Gateway 1.6
+# X4 Data Gateway 1.7
 
 X4 talks to one LAN gateway. The gateway talks to external providers.
 
@@ -77,3 +77,7 @@ RSS/Atom:
 - revalidates redirects,
 - caps the feed body at 1 MiB,
 - returns at most 20 articles.
+
+
+Diagnostyka v1.7:
+- `GET /v1/ping` jest lokalnym testem auth i nie wywoluje zewnetrznych providerow.

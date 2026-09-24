@@ -57,8 +57,8 @@ def test_settings_never_display_token_value():
 
 def test_v16_manifest_truthful_about_http_limitation():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.6-dev"
-    assert data["status"] == "DEVELOPMENT_V1_6_HARDWARE_UNVERIFIED"
+    assert data["version"] == "1.7-dev"
+    assert data["status"] == "DEVELOPMENT_V1_7_HARDWARE_UNVERIFIED"
     assert data["physical_device_verified"] is False
     assert any("shared-token access control" in x for x in data["implemented"])
     assert any("TLS encryption" in x for x in data["not_implemented"])
@@ -67,9 +67,9 @@ def test_v16_manifest_truthful_about_http_limitation():
 def test_v16_workflow_and_release_guard():
     workflow = (ROOT / ".github/workflows/build-x4-bin.yml").read_text(encoding="utf-8")
     guard = (ROOT / ".builder/tools/release_guard.py").read_text(encoding="utf-8")
-    assert "BUILD X4 MULTIHUB v1.6 DEV BIN" in workflow
-    assert "X4_MultiHub_X4_v1_6_dev" in workflow
-    assert "X4_Data_Gateway_Windows_v1_6_dev" in workflow
+    assert "BUILD X4 MULTIHUB v1.7 DEV BIN" in workflow
+    assert "X4_MultiHub_X4_v1_7_dev" in workflow
+    assert "X4_Data_Gateway_Windows_v1_7_dev" in workflow
     for marker in (
         "Gateway access token",
         "Gateway token zapisany",

@@ -77,7 +77,7 @@ def test_reusable_gateway_runtime_health():
         assert response.status == 200
         assert body["ok"] is True
         assert body["service"] == "X4 Data Gateway"
-        assert body["version"] == "1.6"
+        assert body["version"] == "1.7"
         assert body["eodhd_configured"] is False
         assert body["rss_atom"] is True
     finally:
@@ -108,7 +108,7 @@ def test_windows_pyinstaller_build_is_in_workflow():
     ).read_text(encoding="utf-8")
     assert "runs-on: windows-latest" in workflow
     assert "pyinstaller --noconfirm --clean X4DataGateway.spec" in workflow
-    assert "X4_Data_Gateway_Windows_v1_6_dev" in workflow
+    assert "X4_Data_Gateway_Windows_v1_7_dev" in workflow
     assert "gateway/dist/X4DataGateway.exe" in workflow
 
 

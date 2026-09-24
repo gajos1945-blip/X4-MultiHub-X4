@@ -40,7 +40,7 @@ def create_http_server(
     service = _build_service(config)
 
     class Handler(BaseHTTPRequestHandler):
-        server_version = "X4MultiHubGateway/1.6"
+        server_version = "X4MultiHubGateway/1.7"
 
         def send_json(self, status: int, payload: dict) -> None:
             raw = json.dumps(payload, ensure_ascii=False).encode("utf-8")
@@ -68,7 +68,7 @@ def create_http_server(
                         {
                             "ok": True,
                             "service": "X4 Data Gateway",
-                            "version": "1.6",
+                            "version": "1.7",
                             "eodhd_configured": bool(config.eodhd_token),
                             "auth_required": bool(config.access_token),
                             "rss_atom": True,
@@ -81,6 +81,17 @@ def create_http_server(
                     if not _authorized(config, received):
                         self.send_json(401, {"error": "unauthorized"})
                         return
+
+                if parsed.path == "/v1/ping":
+                    self.send_json(
+                        200,
+                        {
+                            "ok": True,
+                            "service": "X4 Data Gateway",
+                            "version": "1.7",
+                        },
+                    )
+                    return
 
                 if parsed.path == "/v1/search":
                     asset = query.get("asset", [""])[0]

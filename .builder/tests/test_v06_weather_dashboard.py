@@ -50,7 +50,7 @@ def test_dashboard_uses_only_bounded_market_rows():
 
 def test_v06_manifest_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.6-dev"
+    assert data["version"] == "1.7-dev"
     assert any("Weather UI" in x for x in data["implemented"])
     assert any("Dashboard combining" in x for x in data["implemented"])
     assert any("microSD cache for market quotes" in x for x in data["implemented"])

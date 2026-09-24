@@ -7,6 +7,7 @@ import socket
 import threading
 import tkinter as tk
 from tkinter import messagebox, ttk
+import urllib.error
 import urllib.request
 import webbrowser
 
@@ -19,7 +20,7 @@ from multihub_gateway.windows_config import (
 )
 
 
-APP_TITLE = "X4 Data Gateway 1.6"
+APP_TITLE = "X4 Data Gateway 1.7"
 
 
 def discover_lan_ipv4() -> list[str]:
@@ -171,6 +172,9 @@ class GatewayWindow:
             side="left", padx=(0, 8)
         )
         ttk.Button(controls, text="Sprawdz /health", command=self.health).pack(
+            side="left", padx=(0, 8)
+        )
+        ttk.Button(controls, text="Test X4 auth", command=self.ping).pack(
             side="left", padx=(0, 8)
         )
 
@@ -339,6 +343,29 @@ class GatewayWindow:
                 self._log(f"HEALTH {response.status}: {body}")
             except Exception as exc:
                 self._log(f"HEALTH ERROR: {exc}")
+
+        threading.Thread(target=worker, daemon=True).start()
+
+    def ping(self) -> None:
+        url = self.url_var.get().rstrip("/") + "/v1/ping"
+
+        def worker() -> None:
+            try:
+                req = urllib.request.Request(url)
+                token = self.access_token_var.get().strip()
+                if token:
+                    req.add_header("X-X4-Token", token)
+                with urllib.request.urlopen(req, timeout=3.0) as response:
+                    body = response.read(4096).decode("utf-8", errors="replace")
+                self._log(f"PING {response.status}: {body}")
+            except urllib.error.HTTPError as exc:
+                try:
+                    body = exc.read(4096).decode("utf-8", errors="replace")
+                except Exception:
+                    body = ""
+                self._log(f"PING HTTP {exc.code}: {body}")
+            except Exception as exc:
+                self._log(f"PING ERROR: {exc}")
 
         threading.Thread(target=worker, daemon=True).start()
 

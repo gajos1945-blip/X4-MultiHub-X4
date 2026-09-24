@@ -89,3 +89,6 @@ v1.4-dev: Reader Dashboard. Czyta stan i progress CrossPoint bez modyfikowania p
 
 
 v1.6-dev: Gateway Access Control. Opcjonalny wspolny token dla /v1/*, X-X4-Token na X4, DPAPI w Windows Gateway. HTTP w LAN pozostaje nieszyfrowane.
+
+
+v1.7-dev: Diagnostyka. Test Wi-Fi/Gateway/auth/microSD/czasu, lokalny /v1/ping i eksport raportu z tokenem REDACTED.

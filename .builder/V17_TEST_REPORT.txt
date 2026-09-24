@@ -1,0 +1,17 @@
+X4 MultiHub v1.7-dev — Diagnostics
+
+Python syntax: PASS
+Workflow YAML: PASS
+Pytest: PASS
+155 passed
+
+Diagnostics safety:
+- /v1/ping is local and does not call external providers
+- gateway token is never written to diagnostics report
+- microSD test uses a temporary file and removes it
+- diagnostics report remains local on microSD
+- no flash/erase operations added
+
+Firmware PlatformIO/C++ compilation: pending GitHub Actions.
+Windows EXE PyInstaller build: pending GitHub Actions windows-latest.
+Physical XTEINK X4 validation: NOT RUN / HARDWARE_UNVERIFIED.

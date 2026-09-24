@@ -1,7 +1,7 @@
 {
   "project": "X4 MultiHub",
-  "version": "1.6-dev",
-  "status": "DEVELOPMENT_V1_6_HARDWARE_UNVERIFIED",
+  "version": "1.7-dev",
+  "status": "DEVELOPMENT_V1_7_HARDWARE_UNVERIFIED",
   "base": {
     "project": "CrossPoint Reader",
     "release": "1.6.0",
@@ -91,7 +91,13 @@
     "X-X4-Token header support in Markets, Weather and News clients",
     "Windows Gateway generation/copy of a typeable 16-hex access token",
     "Windows DPAPI protection for both EODHD and gateway access tokens",
-    "Public /health endpoint exposes only auth_required state, never token value"
+    "Public /health endpoint exposes only auth_required state, never token value",
+    "Diagnostics screen for Wi-Fi, gateway, microSD and local time",
+    "Authenticated local /v1/ping endpoint that does not call external providers",
+    "X4-side gateway health and auth-token match test",
+    "microSD write/read/remove self-test using a temporary diagnostics file",
+    "Exported diagnostics report on microSD with gateway token value redacted",
+    "Windows Gateway Test X4 auth button using /v1/ping"
   ],
   "not_implemented": [
     "Automatic Wi-Fi connection solely for NTP; sync requires an existing Wi-Fi connection",
@@ -105,7 +111,9 @@
     "Whole-book percentage for non-EPUB formats when CrossPoint does not expose equivalent lightweight cached metadata",
     "Automatic Windows Service installation; v1.5 provides a desktop EXE",
     "TLS encryption between X4 and gateway; v1.6 access token is access control over HTTP and assumes a trusted private LAN",
-    "Automatic Windows Service installation; v1.6 provides a desktop EXE"
+    "Automatic Windows Service installation; v1.6 provides a desktop EXE",
+    "Automatic remote log upload; diagnostics stay local on microSD",
+    "TLS encryption between X4 and gateway; diagnostics do not change the trusted-LAN assumption"
   ],
   "automatic_flash": false,
   "automatic_erase": false,
