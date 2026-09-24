@@ -136,3 +136,14 @@ Only after physical X4 validation.
 - [DONE] Reader card visibility/order in Dashboard
 - [SAFE] MultiHub never writes CrossPoint progress.bin
 - [DEFERRED] equivalent whole-book percentage for formats without the same cached EPUB metadata API
+
+
+## v1.6-dev — Gateway Access Control
+- [DONE] optional shared token for all `/v1/*` gateway APIs
+- [DONE] `X-X4-Token` support in Markets / Weather / News
+- [DONE] token stored on X4 microSD, not compiled into firmware
+- [DONE] constant-time comparison in gateway
+- [DONE] token generation/copy in Windows Gateway
+- [DONE] DPAPI protection for both Windows-side secrets
+- [LIMITATION] HTTP LAN transport is not encrypted
+- [DEFERRED] TLS between X4 and gateway

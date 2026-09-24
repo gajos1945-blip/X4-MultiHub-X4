@@ -3,7 +3,7 @@ from pathlib import Path
 
 REQUIRED_MARKERS = (
     b"X4 MultiHub",
-    b"X4 MultiHub 1.5-dev",
+    b"X4 MultiHub 1.6-dev",
     b"Wyczysc caly cache",
     b"Wyczysc cache pogody",
     b"Wyczysc cache rynkow",
@@ -65,6 +65,9 @@ REQUIRED_MARKERS = (
     b"Potwierdzony z cache CrossPoint",
     b"Postep calej ksiazki UNKNOWN",
     b"Brak ostatniej ksiazki",
+    b"Gateway access token",
+    b"Gateway token zapisany",
+    b"Gateway token usuniety",
     b"Pogoda / Rynki / Planner",
 )
 

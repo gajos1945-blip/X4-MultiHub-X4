@@ -29,22 +29,25 @@ def test_windows_settings_roundtrip_keeps_token_out_of_plaintext(tmp_path):
         assert value.startswith("ENC:")
         return value[4:][::-1]
 
-    original = WindowsGatewaySettings(port=9876, eodhd_token="super-secret-token")
+    original = WindowsGatewaySettings(port=9876, eodhd_token="super-secret-token", access_token="x4-access-secret")
     save_settings(original, path, encrypt=encrypt)
 
     raw = path.read_text(encoding="utf-8")
     assert "super-secret-token" not in raw
+    assert "x4-access-secret" not in raw
     assert '"port": 9876' in raw
 
     loaded = load_settings(path, decrypt=decrypt)
     assert loaded.port == 9876
     assert loaded.eodhd_token == "super-secret-token"
+    assert loaded.access_token == "x4-access-secret"
 
 
 def test_windows_settings_missing_file_uses_safe_defaults(tmp_path):
     loaded = load_settings(tmp_path / "missing.json", decrypt=lambda value: value)
     assert loaded.port == 8788
     assert loaded.eodhd_token == ""
+    assert loaded.access_token == ""
 
 
 def test_gateway_port_validation():
@@ -74,7 +77,7 @@ def test_reusable_gateway_runtime_health():
         assert response.status == 200
         assert body["ok"] is True
         assert body["service"] == "X4 Data Gateway"
-        assert body["version"] == "1.5"
+        assert body["version"] == "1.6"
         assert body["eodhd_configured"] is False
         assert body["rss_atom"] is True
     finally:
@@ -105,7 +108,7 @@ def test_windows_pyinstaller_build_is_in_workflow():
     ).read_text(encoding="utf-8")
     assert "runs-on: windows-latest" in workflow
     assert "pyinstaller --noconfirm --clean X4DataGateway.spec" in workflow
-    assert "X4_Data_Gateway_Windows_v1_5_dev" in workflow
+    assert "X4_Data_Gateway_Windows_v1_6_dev" in workflow
     assert "gateway/dist/X4DataGateway.exe" in workflow
 
 

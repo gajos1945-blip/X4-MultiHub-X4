@@ -13,6 +13,7 @@ from .windows_secret import protect_text, unprotect_text
 class WindowsGatewaySettings:
     port: int = 8788
     eodhd_token: str = ""
+    access_token: str = ""
 
 
 def default_settings_path() -> Path:
@@ -42,11 +43,16 @@ def load_settings(
     settings = WindowsGatewaySettings(
         port=validate_port(data.get("port", 8788)),
         eodhd_token="",
+        access_token="",
     )
 
-    encrypted = str(data.get("eodhd_token_dpapi", "") or "")
-    if encrypted:
-        settings.eodhd_token = decrypt(encrypted)
+    encrypted_eodhd = str(data.get("eodhd_token_dpapi", "") or "")
+    if encrypted_eodhd:
+        settings.eodhd_token = decrypt(encrypted_eodhd)
+
+    encrypted_access = str(data.get("access_token_dpapi", "") or "")
+    if encrypted_access:
+        settings.access_token = decrypt(encrypted_access)
 
     return settings
 
@@ -61,10 +67,13 @@ def save_settings(
     target.parent.mkdir(parents=True, exist_ok=True)
 
     payload = {
-        "version": 1,
+        "version": 2,
         "port": validate_port(settings.port),
         "eodhd_token_dpapi": encrypt(settings.eodhd_token)
         if settings.eodhd_token
+        else "",
+        "access_token_dpapi": encrypt(settings.access_token)
+        if settings.access_token
         else "",
     }
 

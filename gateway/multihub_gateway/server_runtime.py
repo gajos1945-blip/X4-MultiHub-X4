@@ -2,6 +2,7 @@ from __future__ import annotations
 
 from http.server import BaseHTTPRequestHandler, ThreadingHTTPServer
 import json
+import secrets
 from typing import Callable
 import urllib.parse
 
@@ -13,6 +14,7 @@ from .service import MultiHubService
 
 
 LogCallback = Callable[[str], None]
+AUTH_HEADER = "X-X4-Token"
 
 
 def _build_service(config: GatewayConfig) -> MultiHubService:
@@ -22,6 +24,15 @@ def _build_service(config: GatewayConfig) -> MultiHubService:
     )
 
 
+def _authorized(config: GatewayConfig, received: str | None) -> bool:
+    expected = config.access_token
+    if not expected:
+        return True
+    if not received:
+        return False
+    return secrets.compare_digest(received, expected)
+
+
 def create_http_server(
     config: GatewayConfig,
     log_callback: LogCallback | None = None,
@@ -29,7 +40,7 @@ def create_http_server(
     service = _build_service(config)
 
     class Handler(BaseHTTPRequestHandler):
-        server_version = "X4MultiHubGateway/1.5"
+        server_version = "X4MultiHubGateway/1.6"
 
         def send_json(self, status: int, payload: dict) -> None:
             raw = json.dumps(payload, ensure_ascii=False).encode("utf-8")
@@ -57,12 +68,19 @@ def create_http_server(
                         {
                             "ok": True,
                             "service": "X4 Data Gateway",
-                            "version": "1.5",
+                            "version": "1.6",
                             "eodhd_configured": bool(config.eodhd_token),
+                            "auth_required": bool(config.access_token),
                             "rss_atom": True,
                         },
                     )
                     return
+
+                if parsed.path.startswith("/v1/"):
+                    received = self.headers.get(AUTH_HEADER)
+                    if not _authorized(config, received):
+                        self.send_json(401, {"error": "unauthorized"})
+                        return
 
                 if parsed.path == "/v1/search":
                     asset = query.get("asset", [""])[0]

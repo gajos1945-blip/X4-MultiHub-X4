@@ -2,11 +2,13 @@ from __future__ import annotations
 from dataclasses import dataclass
 import os
 
+
 @dataclass(frozen=True)
 class GatewayConfig:
     host: str
     port: int
     eodhd_token: str
+    access_token: str = ""
 
     @classmethod
     def from_env(cls) -> "GatewayConfig":
@@ -17,4 +19,5 @@ class GatewayConfig:
             host=os.environ.get("MULTIHUB_GATEWAY_HOST", "0.0.0.0"),
             port=port,
             eodhd_token=os.environ.get("EODHD_API_TOKEN", "").strip(),
+            access_token=os.environ.get("MULTIHUB_GATEWAY_TOKEN", "").strip(),
         )

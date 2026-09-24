@@ -6,6 +6,7 @@
 #include <memory>
 
 #include "DataCache.h"
+#include "GatewayAuthStore.h"
 #include "DashboardSettingsActivity.h"
 #include "MarketStore.h"
 #include "PlannerStore.h"
@@ -22,6 +23,7 @@ namespace {
 const char* LABELS[MultiHubSettingsActivity::ROWS] = {
     "Wi-Fi",
     "X4 Data Gateway",
+    "Gateway access token",
     "Miasto pogody",
     "Data planera",
     "Czas / NTP / Today",
@@ -50,18 +52,19 @@ void MultiHubSettingsActivity::reload() {
 void MultiHubSettingsActivity::rebuildRows() {
   values[0] = WiFi.status() == WL_CONNECTED ? "POLACZONO" : "ROZLACZONO";
   values[1] = gateway.empty() ? "USTAW http://IP:8788" : gateway;
-  values[2] = city.empty() ? "USTAW" : city;
-  values[3] = PlannerStore::validDate(plannerDate) ? plannerDate : "USTAW YYYY-MM-DD";
+  values[2] = GatewayAuthStore::isConfigured() ? "USTAWIONY" : "BRAK";
+  values[3] = city.empty() ? "USTAW" : city;
+  values[4] = PlannerStore::validDate(plannerDate) ? plannerDate : "USTAW YYYY-MM-DD";
 
   std::string localTime;
-  values[4] = TimeService::localNow(localTime) ? localTime : "UNKNOWN";
+  values[5] = TimeService::localNow(localTime) ? localTime : "UNKNOWN";
 
-  values[5] = "Pogoda / Rynki / Planner";
-  values[6] = "Siec / odswiezanie / Wi-Fi OFF";
-  values[7] = "market_quotes.json";
-  values[8] = "weather.json";
-  values[9] = "Rynki + Pogoda";
-  values[10] = "X4 MultiHub 1.5-dev";
+  values[6] = "Pogoda / Rynki / Planner";
+  values[7] = "Siec / odswiezanie / Wi-Fi OFF";
+  values[8] = "market_quotes.json";
+  values[9] = "weather.json";
+  values[10] = "Rynki + Pogoda";
+  values[11] = "X4 MultiHub 1.6-dev";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -84,6 +87,29 @@ void MultiHubSettingsActivity::editGateway() {
             header = "Ustawienia MultiHub";
           } else {
             header = "Niepoprawny gateway";
+          }
+        }
+        rebuildRows();
+        requestUpdate();
+      });
+}
+
+void MultiHubSettingsActivity::editGatewayToken() {
+  startActivityForResult(
+      std::make_unique<KeyboardEntryActivity>(
+          renderer, mappedInput, "Gateway token: puste = usun",
+          "", GatewayAuthStore::MAX_TOKEN_LEN, InputType::Text),
+      [this](const ActivityResult& result) {
+        if (!result.isCancelled) {
+          const std::string value = std::get<KeyboardResult>(result.data).text;
+          if (value.empty()) {
+            header = GatewayAuthStore::clearToken()
+                         ? "Gateway token usuniety"
+                         : "Blad usuwania tokenu";
+          } else if (GatewayAuthStore::saveToken(value)) {
+            header = "Gateway token zapisany";
+          } else {
+            header = "Token: 8-96 znakow ASCII";
           }
         }
         rebuildRows();
@@ -194,16 +220,17 @@ void MultiHubSettingsActivity::activateIndex(const int index) {
       requestUpdate();
       return;
     case 1: editGateway(); return;
-    case 2: editCity(); return;
-    case 3: editPlannerDate(); return;
-    case 4: openTimeSettings(); return;
-    case 5: openDashboardLayout(); return;
-    case 6: openPowerManager(); return;
-    case 7: clearMarketCache(); return;
-    case 8: clearWeatherCache(); return;
-    case 9: clearAllCache(); return;
-    case 10:
-      header = "X4 MultiHub 1.5-dev";
+    case 2: editGatewayToken(); return;
+    case 3: editCity(); return;
+    case 4: editPlannerDate(); return;
+    case 5: openTimeSettings(); return;
+    case 6: openDashboardLayout(); return;
+    case 7: openPowerManager(); return;
+    case 8: clearMarketCache(); return;
+    case 9: clearWeatherCache(); return;
+    case 10: clearAllCache(); return;
+    case 11:
+      header = "X4 MultiHub 1.6-dev";
       requestUpdate();
       return;
     default:

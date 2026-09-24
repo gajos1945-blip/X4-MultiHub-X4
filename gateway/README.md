@@ -1,4 +1,4 @@
-# X4 Data Gateway 1.5
+# X4 Data Gateway 1.6
 
 X4 talks to one LAN gateway. The gateway talks to external providers.
 
@@ -6,6 +6,26 @@ Providers:
 - EODHD: WAR / CC / FOREX search and quotes
 - Open-Meteo: geocoding and weather
 - RSS / Atom: News Terminal feeds
+
+## Optional X4 access token
+
+Set `MULTIHUB_GATEWAY_TOKEN` in CLI mode, or configure **Gateway access token**
+in the Windows GUI.
+
+When a token is configured:
+- every `/v1/*` route requires `X-X4-Token`,
+- comparison uses `secrets.compare_digest`,
+- `/health` remains public and returns only `auth_required: true`,
+- the token itself is never returned by the API.
+
+The X4 stores its matching token on microSD at:
+
+`/.x4-multihub/gateway/auth.json`
+
+The token is not compiled into firmware.
+
+This is access control, not transport encryption. The gateway still uses HTTP
+inside the LAN. Use it only on a trusted private network. Do not port-forward it directly to the Internet.
 
 ## Windows GUI
 
@@ -17,7 +37,8 @@ The GUI:
 - starts/stops the LAN gateway,
 - shows the LAN URL to enter on the X4,
 - performs `/health` checks,
-- stores the EODHD token using Windows DPAPI,
+- can generate a 16-hex-character gateway access token,
+- stores the EODHD token and gateway token using Windows DPAPI,
 - keeps provider secrets out of firmware and Git.
 
 Default port: `8788`.
@@ -26,6 +47,7 @@ Default port: `8788`.
 
 Environment variables:
 - `EODHD_API_TOKEN`
+- `MULTIHUB_GATEWAY_TOKEN` (optional)
 - `MULTIHUB_GATEWAY_HOST` (default `0.0.0.0`)
 - `MULTIHUB_GATEWAY_PORT` (default `8788`)
 
@@ -55,8 +77,3 @@ RSS/Atom:
 - revalidates redirects,
 - caps the feed body at 1 MiB,
 - returns at most 20 articles.
-
-## LAN security
-
-The gateway is intended for a trusted local network. It binds to `0.0.0.0` so
-the X4 can reach it from the same LAN. Do not port-forward it directly to the Internet.

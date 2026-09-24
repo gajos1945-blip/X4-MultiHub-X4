@@ -86,3 +86,6 @@ v1.3-dev: Time / NTP / Today. Manual SNTP, jawna strefa czasowa, opcjonalne Auto
 
 
 v1.4-dev: Reader Dashboard. Czyta stan i progress CrossPoint bez modyfikowania progress.bin; dodaje Kontynuuj czytanie i karte Czytnik w Dashboard.
+
+
+v1.6-dev: Gateway Access Control. Opcjonalny wspolny token dla /v1/*, X-X4-Token na X4, DPAPI w Windows Gateway. HTTP w LAN pozostaje nieszyfrowane.

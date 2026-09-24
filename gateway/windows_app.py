@@ -2,6 +2,7 @@ from __future__ import annotations
 
 import ipaddress
 import queue
+import secrets
 import socket
 import threading
 import tkinter as tk
@@ -18,7 +19,7 @@ from multihub_gateway.windows_config import (
 )
 
 
-APP_TITLE = "X4 Data Gateway 1.5"
+APP_TITLE = "X4 Data Gateway 1.6"
 
 
 def discover_lan_ipv4() -> list[str]:
@@ -52,11 +53,19 @@ def discover_lan_ipv4() -> list[str]:
     return sorted(result)
 
 
+def valid_access_token(value: str) -> bool:
+    if not value:
+        return True
+    if not (8 <= len(value) <= 96):
+        return False
+    return all(0x21 <= ord(ch) <= 0x7E for ch in value)
+
+
 class GatewayWindow:
     def __init__(self, root: tk.Tk) -> None:
         self.root = root
         self.root.title(APP_TITLE)
-        self.root.minsize(720, 520)
+        self.root.minsize(760, 610)
 
         self.server = None
         self.thread: threading.Thread | None = None
@@ -73,6 +82,7 @@ class GatewayWindow:
 
         self.port_var = tk.StringVar(value=str(settings.port))
         self.token_var = tk.StringVar(value=settings.eodhd_token)
+        self.access_token_var = tk.StringVar(value=settings.access_token)
         self.status_var = tk.StringVar(value="STOPPED")
         self.url_var = tk.StringVar(value=self._best_url(settings.port))
 
@@ -115,13 +125,37 @@ class GatewayWindow:
         )
         ttk.Entry(
             form, width=58, textvariable=self.token_var, show="*"
-        ).grid(row=1, column=1, sticky="ew", **pad)
+        ).grid(row=1, column=1, columnspan=3, sticky="ew", **pad)
+
+        ttk.Label(form, text="Gateway access token:").grid(
+            row=2, column=0, sticky="w", **pad
+        )
+        ttk.Entry(
+            form, width=40, textvariable=self.access_token_var, show="*"
+        ).grid(row=2, column=1, sticky="ew", **pad)
+        ttk.Button(
+            form, text="Generuj", command=self.generate_access_token
+        ).grid(row=2, column=2, sticky="w", **pad)
+        ttk.Button(
+            form, text="Pokaz / kopiuj", command=self.show_copy_access_token
+        ).grid(row=2, column=3, sticky="w", **pad)
 
         form.columnconfigure(1, weight=1)
 
         ttk.Label(
             outer,
-            text="Token jest zapisywany lokalnie przez Windows DPAPI, nie do firmware i nie do GitHub.",
+            text=(
+                "EODHD i Gateway token sa zapisywane lokalnie przez Windows DPAPI. "
+                "Gateway token jest opcjonalny; po ustawieniu wpisz ten sam token na X4."
+            ),
+        ).pack(anchor="w", pady=(0, 4))
+
+        ttk.Label(
+            outer,
+            text=(
+                "Uwaga: token ogranicza dostep do API, ale HTTP w LAN nie szyfruje ruchu. "
+                "Uzywaj tylko w zaufanej sieci prywatnej."
+            ),
         ).pack(anchor="w", pady=(0, 10))
 
         controls = ttk.Frame(outer)
@@ -163,7 +197,10 @@ class GatewayWindow:
 
         ttk.Label(
             outer,
-            text="Ten adres wpisz na X4 w: Ustawienia -> X4 Data Gateway.",
+            text=(
+                "Na X4 wpisz adres w: Ustawienia -> X4 Data Gateway, "
+                "a token w: Ustawienia -> Gateway access token."
+            ),
         ).pack(anchor="w", pady=(0, 8))
 
         logs_frame = ttk.LabelFrame(outer, text="Log")
@@ -193,11 +230,45 @@ class GatewayWindow:
             raise ValueError("Port musi byc w zakresie 1..65535")
         return value
 
+    def _access_token(self) -> str:
+        value = self.access_token_var.get().strip()
+        if not valid_access_token(value):
+            raise ValueError(
+                "Gateway access token: 8-96 drukowalnych znakow ASCII bez spacji"
+            )
+        return value
+
+    def generate_access_token(self) -> None:
+        # 64-bit random token, 16 lowercase hex characters: reasonably strong for
+        # trusted-LAN access control while still practical to type on the X4.
+        value = secrets.token_hex(8)
+        self.access_token_var.set(value)
+        self._log("Wygenerowano nowy Gateway access token. Zapisz ustawienia.")
+
+    def show_copy_access_token(self) -> None:
+        try:
+            value = self._access_token()
+        except Exception as exc:
+            messagebox.showerror(APP_TITLE, str(exc))
+            return
+        if not value:
+            messagebox.showinfo(APP_TITLE, "Gateway access token jest pusty.")
+            return
+
+        self.root.clipboard_clear()
+        self.root.clipboard_append(value)
+        self.root.update()
+        messagebox.showinfo(
+            APP_TITLE,
+            "Gateway access token (skopiowany do schowka):\n\n" + value,
+        )
+
     def save(self) -> None:
         try:
             settings = WindowsGatewaySettings(
                 port=self._port(),
                 eodhd_token=self.token_var.get().strip(),
+                access_token=self._access_token(),
             )
             target = save_settings(settings)
             self.url_var.set(self._best_url(settings.port))
@@ -212,11 +283,13 @@ class GatewayWindow:
 
         try:
             port = self._port()
-            token = self.token_var.get().strip()
+            provider_token = self.token_var.get().strip()
+            access_token = self._access_token()
             config = GatewayConfig(
                 host="0.0.0.0",
                 port=port,
-                eodhd_token=token,
+                eodhd_token=provider_token,
+                access_token=access_token,
             )
             self.server = create_http_server(config, self._log)
         except Exception as exc:
@@ -235,7 +308,10 @@ class GatewayWindow:
         self.url_var.set(self._best_url(port))
         self._log(f"START {self.url_var.get()}")
         self._log(
-            "EODHD: " + ("CONFIGURED" if token else "NOT CONFIGURED")
+            "EODHD: " + ("CONFIGURED" if provider_token else "NOT CONFIGURED")
+        )
+        self._log(
+            "AUTH: " + ("REQUIRED" if access_token else "DISABLED")
         )
 
     def stop(self) -> None:

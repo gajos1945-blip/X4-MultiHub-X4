@@ -1,0 +1,18 @@
+X4 MultiHub v1.6-dev — Gateway Access Control
+
+Python syntax: PASS
+Workflow YAML: PASS
+Pytest: PASS
+144 passed
+
+Security checks:
+- optional X-X4-Token on all /v1/* routes
+- constant-time token comparison
+- /health does not expose token value
+- X4 token stored on microSD, not compiled into firmware
+- Windows stores both secrets through DPAPI
+- HTTP LAN transport remains unencrypted and is documented as such
+
+Firmware PlatformIO/C++ compilation: pending GitHub Actions.
+Windows EXE PyInstaller build: pending GitHub Actions windows-latest.
+Physical XTEINK X4 validation: NOT RUN / HARDWARE_UNVERIFIED.

@@ -4,6 +4,8 @@
 #include <HTTPClient.h>
 #include <WiFi.h>
 
+#include "GatewayAuth.h"
+
 #include <cctype>
 #include <cstdio>
 
@@ -114,6 +116,7 @@ WeatherResponse WeatherGatewayClient::current(
     return result;
   }
 
+  GatewayAuth::addHeaderIfConfigured(http);
   const int status = http.GET();
   if (status != 200) {
     result.error = "Gateway HTTP " + std::to_string(status);

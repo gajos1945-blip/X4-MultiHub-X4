@@ -1,7 +1,7 @@
 {
   "project": "X4 MultiHub",
-  "version": "1.5-dev",
-  "status": "DEVELOPMENT_V1_5_HARDWARE_UNVERIFIED",
+  "version": "1.6-dev",
+  "status": "DEVELOPMENT_V1_6_HARDWARE_UNVERIFIED",
   "base": {
     "project": "CrossPoint Reader",
     "release": "1.6.0",
@@ -84,7 +84,14 @@
     "Automatic LAN IPv4 display for entering the gateway URL on X4",
     "Windows DPAPI protection for stored EODHD token",
     "Reusable gateway HTTP server runtime shared by CLI and Windows GUI",
-    "PyInstaller specification and GitHub Actions Windows EXE build"
+    "PyInstaller specification and GitHub Actions Windows EXE build",
+    "Optional shared-token access control for all /v1/* gateway endpoints",
+    "Constant-time gateway token comparison with secrets.compare_digest",
+    "Gateway access token stored on X4 microSD, never compiled into firmware",
+    "X-X4-Token header support in Markets, Weather and News clients",
+    "Windows Gateway generation/copy of a typeable 16-hex access token",
+    "Windows DPAPI protection for both EODHD and gateway access tokens",
+    "Public /health endpoint exposes only auth_required state, never token value"
   ],
   "not_implemented": [
     "Automatic Wi-Fi connection solely for NTP; sync requires an existing Wi-Fi connection",
@@ -96,8 +103,9 @@
     "Offline cache for non-favorited News feeds",
     "Full Polish diacritics validation on physical X4 font/rendering stack",
     "Whole-book percentage for non-EPUB formats when CrossPoint does not expose equivalent lightweight cached metadata",
-    "Gateway authentication between X4 and LAN service; v1.5 assumes a trusted private LAN",
-    "Automatic Windows Service installation; v1.5 provides a desktop EXE"
+    "Automatic Windows Service installation; v1.5 provides a desktop EXE",
+    "TLS encryption between X4 and gateway; v1.6 access token is access control over HTTP and assumes a trusted private LAN",
+    "Automatic Windows Service installation; v1.6 provides a desktop EXE"
   ],
   "automatic_flash": false,
   "automatic_erase": false,
