@@ -8,6 +8,7 @@
 #include "MarketGatewayClient.h"
 #include "MarketStore.h"
 #include "PlannerStore.h"
+#include "ReaderDashboardStore.h"
 #include "WeatherGatewayClient.h"
 #include "activities/UiListActivity.h"
 
@@ -21,6 +22,7 @@ class DashboardActivity final : public UiListActivity {
   std::string lastError;
   std::string header = "Dashboard";
 
+  ReaderDashboardSnapshot reader;
   WeatherSnapshot weather;
   bool weatherCached = false;
   bool marketsCached = false;

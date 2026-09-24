@@ -21,12 +21,12 @@ bool hasCard(const std::vector<std::string>& values, const std::string& card) {
 namespace DashboardStore {
 
 bool validCard(const std::string& card) {
-  return card == "weather" || card == "markets" || card == "planner";
+  return card == "reader" || card == "weather" || card == "markets" || card == "planner";
 }
 
 DashboardConfig defaults() {
   DashboardConfig config;
-  config.order = {"weather", "markets", "planner"};
+  config.order = {"reader", "weather", "markets", "planner"};
   return config;
 }
 
@@ -48,6 +48,7 @@ bool load(DashboardConfig& config) {
   JsonDocument doc;
   if (deserializeJson(doc, raw)) return false;
 
+  config.readerVisible = doc["reader_visible"] | true;
   config.weatherVisible = doc["weather_visible"] | true;
   config.marketsVisible = doc["markets_visible"] | true;
   config.plannerVisible = doc["planner_visible"] | true;
@@ -64,6 +65,9 @@ bool load(DashboardConfig& config) {
     }
   }
 
+  if (!hasCard(order, "reader")) {
+    order.insert(order.begin(), "reader");
+  }
   for (const char* card : {"weather", "markets", "planner"}) {
     if (!hasCard(order, card)) order.emplace_back(card);
   }
@@ -75,6 +79,7 @@ bool save(const DashboardConfig& config) {
   if (!ensureRoot()) return false;
 
   JsonDocument doc;
+  doc["reader_visible"] = config.readerVisible;
   doc["weather_visible"] = config.weatherVisible;
   doc["markets_visible"] = config.marketsVisible;
   doc["planner_visible"] = config.plannerVisible;

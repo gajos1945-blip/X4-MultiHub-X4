@@ -83,3 +83,6 @@ v1.2-dev: Power Manager. Domyslnie brak automatycznego requestu News przy otwarc
 
 
 v1.3-dev: Time / NTP / Today. Manual SNTP, jawna strefa czasowa, opcjonalne Auto Today i wiek cache. Brak deklaracji o fizycznym RTC X4.
+
+
+v1.4-dev: Reader Dashboard. Czyta stan i progress CrossPoint bez modyfikowania progress.bin; dodaje Kontynuuj czytanie i karte Czytnik w Dashboard.

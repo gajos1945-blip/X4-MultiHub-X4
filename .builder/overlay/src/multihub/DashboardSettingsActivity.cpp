@@ -11,6 +11,7 @@ namespace fui = freeink::ui;
 
 namespace {
 const char* displayName(const std::string& card) {
+  if (card == "reader") return "Czytnik";
   if (card == "weather") return "Pogoda";
   if (card == "markets") return "Rynki";
   if (card == "planner") return "Planner";
@@ -24,6 +25,7 @@ void DashboardSettingsActivity::onEnter() {
 }
 
 bool DashboardSettingsActivity::visible(const std::string& card) const {
+  if (card == "reader") return config.readerVisible;
   if (card == "weather") return config.weatherVisible;
   if (card == "markets") return config.marketsVisible;
   if (card == "planner") return config.plannerVisible;
@@ -31,7 +33,8 @@ bool DashboardSettingsActivity::visible(const std::string& card) const {
 }
 
 void DashboardSettingsActivity::toggle(const std::string& card) {
-  if (card == "weather") config.weatherVisible = !config.weatherVisible;
+  if (card == "reader") config.readerVisible = !config.readerVisible;
+  else if (card == "weather") config.weatherVisible = !config.weatherVisible;
   else if (card == "markets") config.marketsVisible = !config.marketsVisible;
   else if (card == "planner") config.plannerVisible = !config.plannerVisible;
 }

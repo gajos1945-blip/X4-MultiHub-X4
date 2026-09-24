@@ -3,7 +3,7 @@ from pathlib import Path
 
 REQUIRED_MARKERS = (
     b"X4 MultiHub",
-    b"X4 MultiHub 1.3-dev",
+    b"X4 MultiHub 1.4-dev",
     b"Wyczysc caly cache",
     b"Wyczysc cache pogody",
     b"Wyczysc cache rynkow",
@@ -60,6 +60,11 @@ REQUIRED_MARKERS = (
     b"Synchronizuj NTP",
     b"Strefa czasowa",
     b"NTP OK",
+    b"Reader Dashboard",
+    b"Kontynuuj czytanie",
+    b"Potwierdzony z cache CrossPoint",
+    b"Postep calej ksiazki UNKNOWN",
+    b"Brak ostatniej ksiazki",
     b"Pogoda / Rynki / Planner",
 )
 

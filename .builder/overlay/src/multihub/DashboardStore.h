@@ -5,6 +5,7 @@
 
 struct DashboardConfig {
   std::vector<std::string> order;
+  bool readerVisible = true;
   bool weatherVisible = true;
   bool marketsVisible = true;
   bool plannerVisible = true;

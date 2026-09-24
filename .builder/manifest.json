@@ -1,7 +1,7 @@
 {
   "project": "X4 MultiHub",
-  "version": "1.3-dev",
-  "status": "DEVELOPMENT_V1_3_HARDWARE_UNVERIFIED",
+  "version": "1.4-dev",
+  "status": "DEVELOPMENT_V1_4_HARDWARE_UNVERIFIED",
   "base": {
     "project": "CrossPoint Reader",
     "release": "1.6.0",
@@ -72,7 +72,14 @@
     "Explicit timezone presets with POSIX TZ rules",
     "Opt-in automatic Planner Today from validated local system time",
     "Market and Weather cache write timestamps when system time is valid",
-    "Human-readable cache age in Markets, Weather and Dashboard"
+    "Human-readable cache age in Markets, Weather and Dashboard",
+    "Reader Dashboard card in Dashboard",
+    "Current/last open book path from CrossPoint APP_STATE",
+    "Book title and author from CrossPoint RecentBooksStore",
+    "EPUB chapter page progress from CrossPoint progress.bin without modifying it",
+    "Whole-book percentage from cached EPUB metadata using CrossPoint lightweight load(false, true)",
+    "Continue Reading action routing back into the stock CrossPoint reader",
+    "Reader Dashboard card visibility and ordering in Dashboard settings"
   ],
   "not_implemented": [
     "Automatic Wi-Fi connection solely for NTP; sync requires an existing Wi-Fi connection",
@@ -82,8 +89,8 @@
     "Battery-percentage low-power threshold because the X4 battery API has not been physically verified",
     "Full web-page readability/article extraction beyond feed-provided summary/content",
     "Offline cache for non-favorited News feeds",
-    "Reader current-book progress card on Dashboard",
-    "Full Polish diacritics validation on physical X4 font/rendering stack"
+    "Full Polish diacritics validation on physical X4 font/rendering stack",
+    "Whole-book percentage for non-EPUB formats when CrossPoint does not expose equivalent lightweight cached metadata"
   ],
   "automatic_flash": false,
   "automatic_erase": false,

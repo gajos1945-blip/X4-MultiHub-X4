@@ -125,3 +125,14 @@ Only after physical X4 validation.
 - [SAFE DEFAULT] Auto Today off
 - [DEFERRED] X4 RTC/deep-sleep accuracy claims until physical validation
 - [DEFERRED] automatic Wi-Fi connection solely for NTP
+
+
+## v1.4-dev — Reader Dashboard
+- [DONE] current/last open book from CrossPoint APP_STATE
+- [DONE] title/author from CrossPoint RecentBooksStore
+- [DONE] EPUB chapter page progress from CrossPoint progress.bin
+- [DONE] whole-book percentage via cached EPUB metadata
+- [DONE] Continue Reading back into stock CrossPoint reader
+- [DONE] Reader card visibility/order in Dashboard
+- [SAFE] MultiHub never writes CrossPoint progress.bin
+- [DEFERRED] equivalent whole-book percentage for formats without the same cached EPUB metadata API

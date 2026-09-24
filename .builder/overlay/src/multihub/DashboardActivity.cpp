@@ -10,6 +10,7 @@
 #include "DashboardSettingsActivity.h"
 #include "MarketsActivity.h"
 #include "PowerManager.h"
+#include "ReaderDashboardActivity.h"
 #include "TimeService.h"
 #include "WeatherActivity.h"
 #include "WeatherStore.h"
@@ -44,6 +45,7 @@ void DashboardActivity::onExit() {
 }
 
 bool DashboardActivity::cardVisible(const std::string& card) const {
+  if (card == "reader") return config.readerVisible;
   if (card == "weather") return config.weatherVisible;
   if (card == "markets") return config.marketsVisible;
   if (card == "planner") return config.plannerVisible;
@@ -88,6 +90,7 @@ void DashboardActivity::reload() {
   MarketStore::loadGateway(gateway);
   WeatherStore::loadCity(city);
   MarketStore::loadFavorites(favorites);
+  ReaderDashboardStore::load(reader);
   PlannerStore::load(tasks);
   PlannerStore::loadActiveDate(activeDate);
   std::string todayDate;
@@ -183,6 +186,26 @@ void DashboardActivity::rebuildRows() {
   for (const auto& card : config.order) {
     if (!cardVisible(card)) continue;
 
+
+    if (card == "reader") {
+      if (reader.available) {
+        std::string value = ReaderDashboardStore::bookProgressLabel(reader);
+        std::string subtitle = ReaderDashboardStore::pageLabel(reader);
+        if (!reader.author.empty()) {
+          subtitle += " | ";
+          subtitle += reader.author;
+        }
+        addRow("reader",
+               reader.title.empty() ? "Czytnik" : reader.title,
+               value,
+               subtitle);
+      } else {
+        addRow("reader", "Czytnik", "Brak ostatniej ksiazki",
+               "Otworz biblioteke / pliki");
+      }
+      continue;
+    }
+
     if (card == "weather") {
       if (weather.available) {
         std::string value = weather.hasTemperature
@@ -260,6 +283,15 @@ void DashboardActivity::openLayout() {
 }
 
 void DashboardActivity::openCard(const std::string& action) {
+  if (action == "reader") {
+    startActivityForResult(
+        std::make_unique<ReaderDashboardActivity>(renderer, mappedInput),
+        [this](const ActivityResult&) {
+          reload();
+          requestUpdate();
+        });
+    return;
+  }
   if (action == "weather") {
     startActivityForResult(
         std::make_unique<WeatherActivity>(renderer, mappedInput),
