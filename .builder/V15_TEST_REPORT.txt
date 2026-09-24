@@ -1,0 +1,17 @@
+X4 MultiHub v1.5-dev — Windows Gateway
+
+Python syntax: PASS
+Workflow YAML: PASS
+Pytest: PASS
+134 passed
+
+Gateway safety:
+- EODHD token remains outside firmware
+- Windows saved token uses DPAPI
+- RSS/Atom SSRF protections remain in place
+- gateway is documented for trusted private LAN only
+- no automatic Windows Service installation
+
+Firmware PlatformIO/C++ compilation: pending GitHub Actions.
+Windows EXE PyInstaller build: pending GitHub Actions windows-latest.
+Physical XTEINK X4 validation: NOT RUN / HARDWARE_UNVERIFIED.

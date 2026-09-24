@@ -1,7 +1,7 @@
 {
   "project": "X4 MultiHub",
-  "version": "1.4-dev",
-  "status": "DEVELOPMENT_V1_4_HARDWARE_UNVERIFIED",
+  "version": "1.5-dev",
+  "status": "DEVELOPMENT_V1_5_HARDWARE_UNVERIFIED",
   "base": {
     "project": "CrossPoint Reader",
     "release": "1.6.0",
@@ -79,7 +79,12 @@
     "EPUB chapter page progress from CrossPoint progress.bin without modifying it",
     "Whole-book percentage from cached EPUB metadata using CrossPoint lightweight load(false, true)",
     "Continue Reading action routing back into the stock CrossPoint reader",
-    "Reader Dashboard card visibility and ordering in Dashboard settings"
+    "Reader Dashboard card visibility and ordering in Dashboard settings",
+    "Windows X4 Data Gateway GUI with Start/Stop and health check",
+    "Automatic LAN IPv4 display for entering the gateway URL on X4",
+    "Windows DPAPI protection for stored EODHD token",
+    "Reusable gateway HTTP server runtime shared by CLI and Windows GUI",
+    "PyInstaller specification and GitHub Actions Windows EXE build"
   ],
   "not_implemented": [
     "Automatic Wi-Fi connection solely for NTP; sync requires an existing Wi-Fi connection",
@@ -90,7 +95,9 @@
     "Full web-page readability/article extraction beyond feed-provided summary/content",
     "Offline cache for non-favorited News feeds",
     "Full Polish diacritics validation on physical X4 font/rendering stack",
-    "Whole-book percentage for non-EPUB formats when CrossPoint does not expose equivalent lightweight cached metadata"
+    "Whole-book percentage for non-EPUB formats when CrossPoint does not expose equivalent lightweight cached metadata",
+    "Gateway authentication between X4 and LAN service; v1.5 assumes a trusted private LAN",
+    "Automatic Windows Service installation; v1.5 provides a desktop EXE"
   ],
   "automatic_flash": false,
   "automatic_erase": false,

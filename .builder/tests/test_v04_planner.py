@@ -50,7 +50,7 @@ def test_planner_features_present():
 def test_planner_auto_today_is_opt_in_and_hardware_unverified():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
     source = (OVERLAY / "DailyPlannerActivity.cpp").read_text(encoding="utf-8")
-    assert data["version"] == "1.4-dev"
+    assert data["version"] == "1.5-dev"
     assert any("Planner Today" in x for x in data["implemented"])
     assert "TimeService::applyTodayToPlanner" in source
     assert data["physical_device_verified"] is False

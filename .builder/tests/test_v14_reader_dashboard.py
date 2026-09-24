@@ -60,8 +60,8 @@ def test_dashboard_config_migrates_existing_layouts_with_reader_card():
 
 def test_v14_manifest_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.4-dev"
-    assert data["status"] == "DEVELOPMENT_V1_4_HARDWARE_UNVERIFIED"
+    assert data["version"] == "1.5-dev"
+    assert data["status"] == "DEVELOPMENT_V1_5_HARDWARE_UNVERIFIED"
     assert data["physical_device_verified"] is False
     assert any("Reader Dashboard card" in x for x in data["implemented"])
     assert any("non-EPUB" in x for x in data["not_implemented"])
@@ -70,9 +70,9 @@ def test_v14_manifest_truthful():
 def test_v14_workflow_and_guard():
     workflow = (ROOT / ".github/workflows/build-x4-bin.yml").read_text(encoding="utf-8")
     guard = (ROOT / ".builder/tools/release_guard.py").read_text(encoding="utf-8")
-    assert "BUILD X4 MULTIHUB v1.4 DEV BIN" in workflow
-    assert "X4_MultiHub_X4_v1_4_dev" in workflow
-    assert "X4_MultiHub_X4_v1.4-dev.bin" in workflow
+    assert "BUILD X4 MULTIHUB v1.5 DEV BIN" in workflow
+    assert "X4_MultiHub_X4_v1_5_dev" in workflow
+    assert "X4_MultiHub_X4_v1.5-dev.bin" in workflow
     for marker in (
         "Reader Dashboard",
         "Kontynuuj czytanie",

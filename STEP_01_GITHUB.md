@@ -1,33 +1,40 @@
-# X4 MultiHub v1.4-dev — Reader Dashboard
+# X4 MultiHub v1.5-dev — Windows Gateway
 
 1. Rozpakuj ZIP.
 2. Skopiuj cala zawartosc do tego samego repo `X4-MultiHub-X4`.
 3. Potwierdz nadpisanie.
 4. GitHub Desktop -> Summary:
-   `X4 MultiHub v1.4-dev Reader Dashboard`
+   `X4 MultiHub v1.5-dev Windows Gateway`
 5. Commit to main.
 6. Push origin.
 7. GitHub -> Actions.
 8. Workflow:
-   `BUILD X4 MULTIHUB v1.4 DEV BIN`
-9. Po Success pobierz artifact:
-   `X4_MultiHub_X4_v1_4_dev`
+   `BUILD X4 MULTIHUB v1.5 DEV BIN`
 
-Oczekiwany BIN:
-`X4_MultiHub_X4_v1.4-dev.bin`
+Po Success beda dwa artifacty:
 
-Reader Dashboard:
-- Dashboard dostaje karte Czytnik,
-- pokazuje ostatnio/biezaco otwarta ksiazke z CrossPoint APP_STATE,
-- tytul i autor pochodza z CrossPoint RecentBooksStore,
-- dla EPUB czytany jest CrossPoint progress.bin (read-only),
-- pokazuje strone rozdzialu i procent rozdzialu,
-- jesli cache EPUB pozwala: pokazuje tez procent calej ksiazki,
-- klik karty -> Reader Dashboard,
-- Kontynuuj czytanie -> stockowy reader CrossPoint,
-- brak ksiazki -> Biblioteka i pliki.
+1. Firmware:
+   `X4_MultiHub_X4_v1_5_dev`
 
-MultiHub NIE zapisuje ani nie zmienia CrossPoint progress.bin.
+   BIN:
+   `X4_MultiHub_X4_v1.5-dev.bin`
 
-To nadal DEVELOPMENT + APPLICATION BIN.
+2. Windows Gateway:
+   `X4_Data_Gateway_Windows_v1_5_dev`
+
+   EXE:
+   `X4DataGateway.exe`
+
+Gateway EXE:
+- Start / Stop,
+- pokazuje adres LAN dla X4,
+- /health,
+- EODHD token chroniony Windows DPAPI,
+- token nie trafia do firmware ani GitHub.
+
+Windows Firewall moze poprosic o zgode przy pierwszym uruchomieniu.
+Zezwalaj tylko w zaufanej sieci prywatnej/LAN.
+Nie wystawiaj gateway bezposrednio do Internetu.
+
+Firmware nadal jest DEVELOPMENT + APPLICATION BIN.
 Workflow nie wykonuje erase_flash i nie flashuje urzadzenia.

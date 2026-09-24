@@ -1,4 +1,4 @@
-name: BUILD X4 MULTIHUB v1.4 DEV BIN
+name: BUILD X4 MULTIHUB v1.5 DEV BIN
 
 on:
   push:
@@ -57,15 +57,54 @@ jobs:
       - name: Build X4 MultiHub
         run: python .builder/build_ci.py
 
-      - name: Upload v1.4 development BIN
+      - name: Upload v1.5 development BIN
         uses: actions/upload-artifact@v4
         with:
-          name: X4_MultiHub_X4_v1_4_dev
+          name: X4_MultiHub_X4_v1_5_dev
           if-no-files-found: error
           path: |
-            dist/X4_MultiHub_X4_v1.4-dev.bin
-            dist/X4_MultiHub_X4_v1.4-dev.bin.sha256.txt
+            dist/X4_MultiHub_X4_v1.5-dev.bin
+            dist/X4_MultiHub_X4_v1.5-dev.bin.sha256.txt
             dist/build_manifest.json
             dist/source_report.json
             dist/DEV_STATUS.txt
+          retention-days: 30
+
+
+  build-gateway-windows:
+    runs-on: windows-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout MultiHub builder
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install Gateway build dependencies
+        shell: pwsh
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r gateway/requirements-windows-build.txt
+
+      - name: Build X4 Data Gateway EXE
+        shell: pwsh
+        run: |
+          Set-Location gateway
+          pyinstaller --noconfirm --clean X4DataGateway.spec
+          if (-not (Test-Path "dist/X4DataGateway.exe")) {
+            throw "X4DataGateway.exe was not created"
+          }
+
+      - name: Upload Windows Gateway
+        uses: actions/upload-artifact@v4
+        with:
+          name: X4_Data_Gateway_Windows_v1_5_dev
+          if-no-files-found: error
+          path: |
+            gateway/dist/X4DataGateway.exe
+            gateway/WINDOWS_GATEWAY_README.txt
           retention-days: 30

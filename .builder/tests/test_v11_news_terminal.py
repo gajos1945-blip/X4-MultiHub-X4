@@ -52,7 +52,7 @@ def test_news_gateway_has_ssrf_and_size_guards():
 
 def test_v11_manifest_is_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.4-dev"
+    assert data["version"] == "1.5-dev"
     assert any("News Terminal main screen" in x for x in data["implemented"])
     assert "Full web-page readability/article extraction beyond feed-provided summary/content" in data["not_implemented"]
     assert any("Power Manager settings screen" in x for x in data["implemented"])
@@ -60,9 +60,9 @@ def test_v11_manifest_is_truthful():
 
 def test_v11_workflow_is_dev_not_final_release():
     workflow = (ROOT / ".github/workflows/build-x4-bin.yml").read_text(encoding="utf-8")
-    assert "BUILD X4 MULTIHUB v1.4 DEV BIN" in workflow
-    assert "X4_MultiHub_X4_v1_4_dev" in workflow
-    assert "X4_MultiHub_X4_v1.4-dev.bin" in workflow
+    assert "BUILD X4 MULTIHUB v1.5 DEV BIN" in workflow
+    assert "X4_MultiHub_X4_v1_5_dev" in workflow
+    assert "X4_MultiHub_X4_v1.5-dev.bin" in workflow
     assert "Custom.bin" not in workflow
 
 def test_release_guard_requires_news_runtime_markers():
