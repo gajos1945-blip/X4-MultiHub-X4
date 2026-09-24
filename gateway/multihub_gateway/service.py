@@ -3,11 +3,13 @@ from dataclasses import asdict
 
 from .providers.eodhd import EodhdProvider
 from .providers.open_meteo import OpenMeteoProvider
+from .providers.rss import RssProvider
 
 class MultiHubService:
-    def __init__(self, eodhd: EodhdProvider, weather: OpenMeteoProvider):
+    def __init__(self, eodhd: EodhdProvider, weather: OpenMeteoProvider, rss: RssProvider | None = None):
         self.eodhd = eodhd
         self.weather = weather
+        self.rss = rss or RssProvider()
 
     def search(self, asset: str, query: str) -> dict:
         mapping = {
@@ -64,3 +66,13 @@ class MultiHubService:
     def weather_for_city(self, city: str) -> dict:
         value = asdict(self.weather.weather_for_city(city))
         return value
+
+    def news(self, url: str, limit: int = 15) -> dict:
+        result = self.rss.fetch(url, limit)
+        return {
+            "feed": {
+                "title": result.title,
+                "url": result.url,
+            },
+            "articles": [asdict(item) for item in result.articles],
+        }

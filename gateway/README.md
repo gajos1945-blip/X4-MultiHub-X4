@@ -30,3 +30,20 @@ START_GATEWAY_WINDOWS.cmd
 
 The gateway returns normalized JSON. The X4 firmware never needs to know the
 provider's private API token.
+
+
+## News Terminal v1.1
+
+Endpoint:
+- `GET /v1/news?url=<public RSS/Atom URL>&limit=15`
+
+Security:
+- only `http` / `https`,
+- credentials in URLs are rejected,
+- DNS targets resolving to loopback/private/link-local/reserved addresses are rejected,
+- redirects are revalidated,
+- feed body is capped at 1 MiB,
+- at most 20 articles are returned.
+
+The gateway parses RSS/Atom and sends compact JSON to the X4.
+No RSS credentials/API secrets are stored in firmware.

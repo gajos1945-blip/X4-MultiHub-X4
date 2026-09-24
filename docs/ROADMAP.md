@@ -91,3 +91,16 @@ Only after physical X4 validation.
 
 ## v1.0.0 stable
 Only after physical X4 validation.
+
+
+## v1.1-dev — News Terminal
+- [DONE] user-managed RSS/Atom sources
+- [DONE] News Terminal main screen
+- [DONE] feed headlines/source/publication date
+- [DONE] article summary/content from feed opened in CrossPoint reader
+- [DONE] persistent News favorites
+- [DONE] gateway RSS/Atom parser
+- [DONE] SSRF protection and redirect revalidation
+- [DONE] 1 MiB feed limit / 20 article cap
+- [DEFERRED] full web-page readability extraction
+- [DEFERRED] news offline cache

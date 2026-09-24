@@ -21,7 +21,7 @@ SERVICE = MultiHubService(
 )
 
 class Handler(BaseHTTPRequestHandler):
-    server_version = "X4MultiHubGateway/0.1"
+    server_version = "X4MultiHubGateway/1.1"
 
     def send_json(self, status: int, payload: dict) -> None:
         raw = json.dumps(payload, ensure_ascii=False).encode("utf-8")
@@ -40,8 +40,9 @@ class Handler(BaseHTTPRequestHandler):
                 self.send_json(200, {
                     "ok": True,
                     "service": "X4 Data Gateway",
-                    "version": "0.1",
+                    "version": "1.1",
                     "eodhd_configured": bool(CONFIG.eodhd_token),
+                    "rss_atom": True,
                 })
                 return
 
@@ -65,6 +66,18 @@ class Handler(BaseHTTPRequestHandler):
             if parsed.path == "/v1/weather":
                 city = query.get("city", [""])[0]
                 self.send_json(200, SERVICE.weather_for_city(city))
+                return
+
+            if parsed.path == "/v1/news":
+                url = query.get("url", [""])[0]
+                raw_limit = query.get("limit", ["15"])[0]
+                try:
+                    limit = int(raw_limit)
+                except ValueError as exc:
+                    raise ValueError("limit must be an integer") from exc
+                if not (1 <= limit <= 20):
+                    raise ValueError("limit must be between 1 and 20")
+                self.send_json(200, SERVICE.news(url, limit))
                 return
 
             self.send_json(404, {"error": "not found"})

@@ -15,7 +15,7 @@ from bin_inspector import sha256_file
 
 def test_manifest_has_no_fake_hardware_verification():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.0.0-rc1"
+    assert data["version"] == "1.1-dev"
     assert data["physical_device_verified"] is False
     assert data["automatic_erase"] is False
 

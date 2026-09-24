@@ -51,7 +51,7 @@ void MultiHubSettingsActivity::rebuildRows() {
   values[5] = "market_quotes.json";
   values[6] = "weather.json";
   values[7] = "Rynki + Pogoda";
-  values[8] = "X4 MultiHub 1.0.0-rc1";
+  values[8] = "X4 MultiHub 1.1-dev";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -172,7 +172,7 @@ void MultiHubSettingsActivity::activateIndex(const int index) {
     case 6: clearWeatherCache(); return;
     case 7: clearAllCache(); return;
     case 8:
-      header = "X4 MultiHub 1.0.0-rc1";
+      header = "X4 MultiHub 1.1-dev";
       requestUpdate();
       return;
     default:

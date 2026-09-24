@@ -74,3 +74,6 @@ v1.0.0-rc1: RELEASE CANDIDATE. Static/CI release gates sa zaostrzone. Physical X
 
 
 v1.0.0-rc1: SOFTWARE FEATURE COMPLETE. Physical X4 validation: NOT RUN.
+
+
+v1.1-dev: rozpoczecie dalszego rozwoju na bazie zamrozonego v1.0.0-rc1. Nowy modul: News Terminal RSS/Atom.

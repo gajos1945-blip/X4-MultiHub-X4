@@ -9,6 +9,7 @@
 #include "DailyPlannerActivity.h"
 #include "MarketsActivity.h"
 #include "WeatherActivity.h"
+#include "NewsActivity.h"
 #include "DashboardActivity.h"
 #include "MultiHubSettingsActivity.h"
 
@@ -21,6 +22,7 @@ const char* LABELS[MultiHubActivity::ROWS] = {
     "Planer",
     "Rynki",
     "Pogoda",
+    "Wiadomosci",
     "Dashboard",
     "Ustawienia",
 };
@@ -37,8 +39,9 @@ void MultiHubActivity::rebuildRows() {
   values[2] = "Zadania / priorytety / notatki";
   values[3] = "GPW / NewConnect / Crypto / FX";
   values[4] = "Open-Meteo przez Gateway";
-  values[5] = "Pogoda / Rynki / Planner";
-  values[6] = "Gateway / Pogoda / Cache / Dashboard";
+  values[5] = "RSS / Atom / Ulubione";
+  values[6] = "Pogoda / Rynki / Planner";
+  values[7] = "Gateway / Pogoda / Cache / Dashboard";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -87,13 +90,21 @@ void MultiHubActivity::activateIndex(const int index) {
       return;
     case 5:
       startActivityForResult(
-          std::make_unique<DashboardActivity>(renderer, mappedInput),
+          std::make_unique<NewsActivity>(renderer, mappedInput),
           [this](const ActivityResult&) {
             rebuildRows();
             requestUpdate();
           });
       return;
     case 6:
+      startActivityForResult(
+          std::make_unique<DashboardActivity>(renderer, mappedInput),
+          [this](const ActivityResult&) {
+            rebuildRows();
+            requestUpdate();
+          });
+      return;
+    case 7:
       startActivityForResult(
           std::make_unique<MultiHubSettingsActivity>(renderer, mappedInput),
           [this](const ActivityResult&) {

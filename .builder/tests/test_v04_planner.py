@@ -49,7 +49,7 @@ def test_planner_features_present():
 
 def test_planner_does_not_claim_automatic_today():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.0.0-rc1"
+    assert data["version"] == "1.1-dev"
     assert "Automatic Today date from device RTC/NTP" in data["not_implemented"]
     assert data["physical_device_verified"] is False
 

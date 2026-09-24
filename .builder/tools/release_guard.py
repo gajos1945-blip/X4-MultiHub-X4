@@ -3,7 +3,7 @@ from pathlib import Path
 
 REQUIRED_MARKERS = (
     b"X4 MultiHub",
-    b"X4 MultiHub 1.0.0-rc1",
+    b"X4 MultiHub 1.1-dev",
     b"Wyczysc caly cache",
     b"Wyczysc cache pogody",
     b"Wyczysc cache rynkow",
@@ -44,6 +44,13 @@ REQUIRED_MARKERS = (
     b"Wilgotnosc",
     b"Odswiez pogode",
     b"Open-Meteo przez Gateway",
+    b"Wiadomosci",
+    b"RSS / Atom / Ulubione",
+    b"News Terminal",
+    b"Dodaj zrodlo RSS/Atom",
+    b"Ulubione wiadomosci",
+    b"Odswiez kanal",
+    b"URL RSS/Atom http(s)://",
     b"Pogoda / Rynki / Planner",
 )
 

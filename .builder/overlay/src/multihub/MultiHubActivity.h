@@ -7,7 +7,7 @@
 
 class MultiHubActivity final : public UiListActivity {
  public:
-  static constexpr int ROWS = 7;
+  static constexpr int ROWS = 8;
 
  private:
   std::array<freeink::ui::ListItem, ROWS> rows{};
