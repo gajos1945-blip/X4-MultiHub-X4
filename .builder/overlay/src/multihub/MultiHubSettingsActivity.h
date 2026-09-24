@@ -8,7 +8,7 @@
 
 class MultiHubSettingsActivity final : public UiListActivity {
  public:
-  static constexpr int ROWS = 9;
+  static constexpr int ROWS = 10;
 
  private:
 
@@ -28,6 +28,7 @@ class MultiHubSettingsActivity final : public UiListActivity {
   void editCity();
   void editPlannerDate();
   void openDashboardLayout();
+  void openPowerManager();
   void clearMarketCache();
   void clearWeatherCache();
   void clearAllCache();

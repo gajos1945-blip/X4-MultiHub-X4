@@ -7,6 +7,7 @@
 
 #include "MarketStore.h"
 #include "DataCache.h"
+#include "PowerManager.h"
 #include "WeatherStore.h"
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
@@ -169,6 +170,7 @@ void WeatherActivity::editGateway() {
 void WeatherActivity::refreshWeather() {
   WeatherGatewayClient client;
   const WeatherResponse response = client.current(gateway, city);
+  PowerManager::afterOnlineOperation();
   if (!response.ok) {
     WeatherSnapshot cached;
     if (DataCache::loadWeather(cached)) {

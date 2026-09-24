@@ -20,7 +20,7 @@ from rc_audit import audit_repository
 UPSTREAM = "https://github.com/crosspoint-reader/crosspoint-reader.git"
 COMMIT = "54337e6d73fc628f4ba523ddc89a743ca8c6e4c5"
 ENV = "gh_release"
-RELEASE_NAME = "X4_MultiHub_X4_v1.1-dev.bin"
+RELEASE_NAME = "X4_MultiHub_X4_v1.2-dev.bin"
 
 class BuildError(RuntimeError):
     pass
@@ -168,7 +168,7 @@ def main() -> int:
 
     manifest = {
         "project": "X4 MultiHub",
-        "version": "1.1-dev",
+        "version": "1.2-dev",
         "base_release": "CrossPoint 1.6.0",
         "upstream_commit": COMMIT,
         "platformio_environment": ENV,
@@ -177,7 +177,7 @@ def main() -> int:
         "artifact": {**info, "filename": RELEASE_NAME, "sha256": sha},
         "source_facts": report,
         "application_partition": app_partition,
-        "release_status": "DEVELOPMENT_V1_1_HARDWARE_UNVERIFIED",
+        "release_status": "DEVELOPMENT_V1_2_HARDWARE_UNVERIFIED",
         "software_feature_complete": False,
         "image_integrity_verified": True,
         "application_partition_spare_bytes": partition_spare,
@@ -192,8 +192,8 @@ def main() -> int:
     )
 
     (dist / "DEV_STATUS.txt").write_text(
-        "X4 MultiHub v1.1-dev\n"
-        "NEWS TERMINAL DEVELOPMENT MILESTONE\n"
+        "X4 MultiHub v1.2-dev\n"
+        "POWER MANAGER DEVELOPMENT MILESTONE\n"
         "PHYSICAL X4 VERIFIED: NO\n"
         "IMAGE TYPE: APPLICATION BIN\n"
         "MERGED/FULL FLASH: NO\n"
@@ -205,7 +205,7 @@ def main() -> int:
     print("=== 8/8 DONE ===")
     print("BIN:", final_bin)
     print("SHA-256:", sha)
-    print("Milestone: News Terminal v1.1-dev")
+    print("Milestone: Power Manager v1.2-dev")
     print("Physical X4 validation: NOT RUN")
     print("This workflow does NOT flash or erase any device.")
     return 0

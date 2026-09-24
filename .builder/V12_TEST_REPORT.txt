@@ -1,0 +1,14 @@
+X4 MultiHub v1.2-dev — Power Manager
+
+Python syntax: PASS
+Pytest: PASS
+101 passed
+
+PlatformIO/C++ compilation: pending GitHub Actions against pinned upstream.
+Physical XTEINK X4 validation: NOT RUN / HARDWARE_UNVERIFIED.
+
+Power safety:
+- default auto_refresh_on_open = false
+- default radio_off_after_refresh = false
+- explicit radio-off uses WiFi.disconnect(true, false)
+- no deep-sleep/wake-source changes in this milestone

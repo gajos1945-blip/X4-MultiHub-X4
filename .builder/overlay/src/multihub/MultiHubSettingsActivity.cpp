@@ -9,6 +9,7 @@
 #include "DashboardSettingsActivity.h"
 #include "MarketStore.h"
 #include "PlannerStore.h"
+#include "PowerSettingsActivity.h"
 #include "WeatherStore.h"
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
@@ -22,6 +23,7 @@ const char* LABELS[MultiHubSettingsActivity::ROWS] = {
     "Miasto pogody",
     "Data planera",
     "Uklad Dashboard",
+    "Power Manager",
     "Wyczysc cache rynkow",
     "Wyczysc cache pogody",
     "Wyczysc caly cache",
@@ -48,10 +50,11 @@ void MultiHubSettingsActivity::rebuildRows() {
   values[2] = city.empty() ? "USTAW" : city;
   values[3] = PlannerStore::validDate(plannerDate) ? plannerDate : "USTAW YYYY-MM-DD";
   values[4] = "Pogoda / Rynki / Planner";
-  values[5] = "market_quotes.json";
-  values[6] = "weather.json";
-  values[7] = "Rynki + Pogoda";
-  values[8] = "X4 MultiHub 1.1-dev";
+  values[5] = "Siec / odswiezanie / Wi-Fi OFF";
+  values[6] = "market_quotes.json";
+  values[7] = "weather.json";
+  values[8] = "Rynki + Pogoda";
+  values[9] = "X4 MultiHub 1.2-dev";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -133,6 +136,15 @@ void MultiHubSettingsActivity::openDashboardLayout() {
       });
 }
 
+void MultiHubSettingsActivity::openPowerManager() {
+  startActivityForResult(
+      std::make_unique<PowerSettingsActivity>(renderer, mappedInput),
+      [this](const ActivityResult&) {
+        rebuildRows();
+        requestUpdate();
+      });
+}
+
 void MultiHubSettingsActivity::clearMarketCache() {
   header = DataCache::clearMarkets()
                ? "Cache rynkow wyczyszczony"
@@ -168,11 +180,12 @@ void MultiHubSettingsActivity::activateIndex(const int index) {
     case 2: editCity(); return;
     case 3: editPlannerDate(); return;
     case 4: openDashboardLayout(); return;
-    case 5: clearMarketCache(); return;
-    case 6: clearWeatherCache(); return;
-    case 7: clearAllCache(); return;
-    case 8:
-      header = "X4 MultiHub 1.1-dev";
+    case 5: openPowerManager(); return;
+    case 6: clearMarketCache(); return;
+    case 7: clearWeatherCache(); return;
+    case 8: clearAllCache(); return;
+    case 9:
+      header = "X4 MultiHub 1.2-dev";
       requestUpdate();
       return;
     default:

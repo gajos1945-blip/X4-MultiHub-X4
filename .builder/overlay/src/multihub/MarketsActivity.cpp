@@ -8,6 +8,7 @@
 
 #include "MarketSearchResultsActivity.h"
 #include "DataCache.h"
+#include "PowerManager.h"
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
 
@@ -172,6 +173,7 @@ void MarketsActivity::searchAndAdd() {
 
         const std::string query = std::get<KeyboardResult>(result.data).text;
         const MarketSearchResponse response = client.search(gateway, asset, query);
+        PowerManager::afterOnlineOperation();
         if (!response.ok) {
           lastError = response.error;
           rebuildRows();
@@ -213,6 +215,7 @@ void MarketsActivity::refreshQuotes() {
   for (const auto& favorite : favorites) symbols.push_back(favorite.symbol);
 
   const MarketQuoteResponse response = client.quotes(gateway, symbols);
+  PowerManager::afterOnlineOperation();
   if (!response.ok) {
     std::vector<MarketQuote> cached;
     if (DataCache::loadMarketQuotes(cached)) {

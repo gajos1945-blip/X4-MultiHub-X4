@@ -1,7 +1,7 @@
 {
   "project": "X4 MultiHub",
-  "version": "1.1-dev",
-  "status": "DEVELOPMENT_V1_1_HARDWARE_UNVERIFIED",
+  "version": "1.2-dev",
+  "status": "DEVELOPMENT_V1_2_HARDWARE_UNVERIFIED",
   "base": {
     "project": "CrossPoint Reader",
     "release": "1.6.0",
@@ -62,12 +62,18 @@
     "News article summary opened through the CrossPoint text reader",
     "News favorites persisted on microSD",
     "Gateway SSRF protections for RSS/Atom URLs and redirects",
-    "Gateway RSS/Atom response-size and article-count limits"
+    "Gateway RSS/Atom response-size and article-count limits",
+    "Power Manager settings screen",
+    "Manual-by-default News online refresh policy",
+    "Optional Wi-Fi radio off after completed MultiHub online operation",
+    "Explicit Wi-Fi radio off action without intentional AP credential erase",
+    "Power policy persisted on microSD"
   ],
   "not_implemented": [
+    "Hardware deep sleep scheduling and wake-source changes without physical X4 validation",
+    "Battery-percentage low-power threshold because the X4 battery API has not been physically verified",
     "Full web-page readability/article extraction beyond feed-provided summary/content",
     "Offline cache for non-favorited News feeds",
-    "Power Manager",
     "Reliable elapsed cache age calculation until X4 RTC/NTP behavior is physically verified",
     "Automatic Today date from device RTC/NTP",
     "Reader current-book progress card on Dashboard",

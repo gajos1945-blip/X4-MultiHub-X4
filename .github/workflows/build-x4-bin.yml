@@ -1,4 +1,4 @@
-name: BUILD X4 MULTIHUB v1.1 DEV BIN
+name: BUILD X4 MULTIHUB v1.2 DEV BIN
 
 on:
   push:
@@ -57,14 +57,14 @@ jobs:
       - name: Build X4 MultiHub
         run: python .builder/build_ci.py
 
-      - name: Upload v1.1 development BIN
+      - name: Upload v1.2 development BIN
         uses: actions/upload-artifact@v4
         with:
-          name: X4_MultiHub_X4_v1_1_dev
+          name: X4_MultiHub_X4_v1_2_dev
           if-no-files-found: error
           path: |
-            dist/X4_MultiHub_X4_v1.1-dev.bin
-            dist/X4_MultiHub_X4_v1.1-dev.bin.sha256.txt
+            dist/X4_MultiHub_X4_v1.2-dev.bin
+            dist/X4_MultiHub_X4_v1.2-dev.bin.sha256.txt
             dist/build_manifest.json
             dist/source_report.json
             dist/DEV_STATUS.txt

@@ -104,3 +104,13 @@ Only after physical X4 validation.
 - [DONE] 1 MiB feed limit / 20 article cap
 - [DEFERRED] full web-page readability extraction
 - [DEFERRED] news offline cache
+
+
+## v1.2-dev — Power Manager
+- [DONE] persistent power policy
+- [DONE] News manual refresh by default
+- [DONE] opt-in Wi-Fi OFF after a completed online operation
+- [DONE] explicit Wi-Fi OFF action
+- [DONE] no intentional AP credential erase
+- [DEFERRED] deep-sleep/wake-source modifications until physical X4 validation
+- [DEFERRED] low-battery threshold until battery API is physically verified

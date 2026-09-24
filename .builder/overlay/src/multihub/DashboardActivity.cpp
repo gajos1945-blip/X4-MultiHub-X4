@@ -9,6 +9,7 @@
 #include "DataCache.h"
 #include "DashboardSettingsActivity.h"
 #include "MarketsActivity.h"
+#include "PowerManager.h"
 #include "WeatherActivity.h"
 #include "WeatherStore.h"
 #include "components/UITheme.h"
@@ -98,8 +99,10 @@ void DashboardActivity::reload() {
 
 void DashboardActivity::refreshAll() {
   lastError.clear();
+  bool onlineAttempted = false;
 
   if (!city.empty()) {
+    onlineAttempted = true;
     WeatherGatewayClient weatherClient;
     const WeatherResponse response = weatherClient.current(gateway, city);
     if (response.ok) {
@@ -121,6 +124,7 @@ void DashboardActivity::refreshAll() {
   }
 
   if (!favorites.empty()) {
+    onlineAttempted = true;
     std::vector<std::string> symbols;
     const size_t count = favorites.size() < MAX_MARKET_ROWS
                              ? favorites.size()
@@ -150,6 +154,7 @@ void DashboardActivity::refreshAll() {
     }
   }
 
+  if (onlineAttempted) PowerManager::afterOnlineOperation();
   rebuildRows();
   requestUpdate();
 }

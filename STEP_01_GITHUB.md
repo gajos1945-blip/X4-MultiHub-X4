@@ -1,37 +1,38 @@
-# X4 MultiHub v1.1-dev — News Terminal
+# X4 MultiHub v1.2-dev — Power Manager
 
 1. Rozpakuj ZIP.
-2. Skopiuj cala zawartosc do obecnego repo `X4-MultiHub-X4`.
+2. Skopiuj cala zawartosc do tego samego repo `X4-MultiHub-X4`.
 3. Potwierdz nadpisanie.
 4. GitHub Desktop -> Summary:
-   `X4 MultiHub v1.1-dev News Terminal`
+   `X4 MultiHub v1.2-dev Power Manager`
 5. Commit to main.
 6. Push origin.
 7. GitHub -> Actions.
 8. Workflow:
-   `BUILD X4 MULTIHUB v1.1 DEV BIN`
+   `BUILD X4 MULTIHUB v1.2 DEV BIN`
 9. Po Success pobierz artifact:
-   `X4_MultiHub_X4_v1_1_dev`
+   `X4_MultiHub_X4_v1_2_dev`
 
 Oczekiwany BIN:
-`X4_MultiHub_X4_v1.1-dev.bin`
+`X4_MultiHub_X4_v1.2-dev.bin`
 
-Nowy modul:
-- Wiadomosci / News Terminal,
-- dowolne publiczne RSS/Atom dodawane z klawiatury,
-- wlasna lista zrodel na microSD,
-- naglowki / zrodlo / data publikacji,
-- ulubione artykuly,
-- otwarcie tresci/summary z feedu w standardowym readerze CrossPoint,
-- gateway endpoint `/v1/news`,
-- ochrona SSRF: prywatne/loopback/link-local/reserved IP sa blokowane,
-- redirecty sa walidowane ponownie,
-- limit 1 MiB na feed i max 20 artykulow.
+Power Manager:
+- Ustawienia MultiHub -> Power Manager
+- Online przy otwarciu:
+  RECZNIE (domyslnie) / AUTO
+- Wi-Fi OFF po odswiezeniu:
+  WYLACZONE (domyslnie) / WLACZONE
+- Wylacz Wi-Fi teraz:
+  jawna akcja uzytkownika
 
-Celowo NOT IMPLEMENTED w v1.1-dev:
-- pelne pobieranie i "readability" calej strony WWW artykulu,
-- offline cache dla zwyklych, nieulubionych kanalow,
-- Power Manager,
-- NTP/automatyczne Today.
+Wylaczenie radia korzysta z Arduino-ESP32:
+`WiFi.disconnect(true, false)`
+czyli wifioff=true i eraseap=false.
 
-Nie flashujemy tego development milestone bez osobnej decyzji testowej.
+Nie implementujemy jeszcze:
+- zmian deep sleep / wake sources,
+- progow baterii,
+bo wymagaja fizycznego X4.
+
+To nadal DEVELOPMENT + APPLICATION BIN.
+Workflow nie wykonuje erase_flash i nie flashuje urzadzenia.

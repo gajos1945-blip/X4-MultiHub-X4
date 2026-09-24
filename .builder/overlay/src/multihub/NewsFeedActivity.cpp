@@ -4,6 +4,7 @@
 #include <I18n.h>
 
 #include "MarketStore.h"
+#include "PowerManager.h"
 #include "activities/ActivityManager.h"
 #include "components/UITheme.h"
 
@@ -12,7 +13,14 @@ namespace fui = freeink::ui;
 void NewsFeedActivity::onEnter() {
   UiListActivity::onEnter();
   MarketStore::loadGateway(gateway);
-  refresh();
+  if (PowerManager::autoRefreshOnOpen()) {
+    refresh();
+  } else {
+    error.clear();
+    articles.clear();
+    rebuildRows();
+    requestUpdate();
+  }
 }
 
 void NewsFeedActivity::onExit() {
@@ -26,6 +34,7 @@ void NewsFeedActivity::onExit() {
 void NewsFeedActivity::refresh() {
   NewsGatewayClient client;
   const NewsFeedResponse response = client.fetch(gateway, feed.url, 15);
+  PowerManager::afterOnlineOperation();
 
   if (!response.ok) {
     error = response.error;
