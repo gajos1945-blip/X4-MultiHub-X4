@@ -29,7 +29,7 @@ def test_settings_centralizes_required_controls():
         "Wyczysc cache rynkow",
         "Wyczysc cache pogody",
         "Wyczysc caly cache",
-        "X4 MultiHub 1.2-dev",
+        "X4 MultiHub 1.3-dev",
     ):
         assert marker in source
 
@@ -44,9 +44,9 @@ def test_settings_reuses_verified_storage_layers():
 
 def test_v08_manifest_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.2-dev"
+    assert data["version"] == "1.3-dev"
     assert any("Central MultiHub Settings" in x for x in data["implemented"])
-    assert "Automatic Today date from device RTC/NTP" in data["not_implemented"]
+    assert any("Planner Today" in x for x in data["implemented"])
     assert "Full Polish diacritics validation on physical X4 font/rendering stack" in data["not_implemented"]
     assert data["physical_device_verified"] is False
 
@@ -58,6 +58,6 @@ def test_release_guard_no_longer_requires_settings_placeholder():
         "Wyczysc cache rynkow",
         "Wyczysc cache pogody",
         "Wyczysc caly cache",
-        "X4 MultiHub 1.2-dev",
+        "X4 MultiHub 1.3-dev",
     ):
         assert marker in guard

@@ -47,10 +47,12 @@ def test_planner_features_present():
     for token in ("Priorytet", "Notatka", "Usun zadanie"):
         assert token in actions
 
-def test_planner_does_not_claim_automatic_today():
+def test_planner_auto_today_is_opt_in_and_hardware_unverified():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.2-dev"
-    assert "Automatic Today date from device RTC/NTP" in data["not_implemented"]
+    source = (OVERLAY / "DailyPlannerActivity.cpp").read_text(encoding="utf-8")
+    assert data["version"] == "1.3-dev"
+    assert any("Planner Today" in x for x in data["implemented"])
+    assert "TimeService::applyTodayToPlanner" in source
     assert data["physical_device_verified"] is False
 
 def test_release_guard_requires_planner_markers():

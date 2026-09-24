@@ -7,6 +7,7 @@
 #include <memory>
 
 #include "PlannerTaskActionsActivity.h"
+#include "TimeService.h"
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
 
@@ -41,6 +42,10 @@ void DailyPlannerActivity::reload() {
   tasks.clear();
   PlannerStore::load(tasks);
   PlannerStore::loadActiveDate(activeDate);
+
+  std::string todayDate;
+  if (TimeService::applyTodayToPlanner(&todayDate)) activeDate = todayDate;
+
   rebuildVisible();
 }
 

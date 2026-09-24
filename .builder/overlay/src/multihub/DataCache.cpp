@@ -6,6 +6,8 @@
 #include <algorithm>
 #include <string>
 
+#include "TimeService.h"
+
 namespace {
 constexpr const char* MOD = "DataCache";
 constexpr size_t MAX_CACHE_BYTES = 24 * 1024;
@@ -58,6 +60,7 @@ namespace DataCache {
 
 bool saveMarketQuotes(const std::vector<MarketQuote>& quotes) {
   JsonDocument doc;
+  doc["cached_at_epoch"] = TimeService::nowEpoch();
   JsonArray rows = doc["quotes"].to<JsonArray>();
 
   const size_t count = std::min(quotes.size(), MAX_QUOTES);
@@ -77,14 +80,17 @@ bool saveMarketQuotes(const std::vector<MarketQuote>& quotes) {
   return writeAtomic(MARKET_QUOTES_PATH, raw);
 }
 
-bool loadMarketQuotes(std::vector<MarketQuote>& quotes) {
+bool loadMarketQuotes(std::vector<MarketQuote>& quotes, int64_t* cachedAtEpoch) {
   quotes.clear();
+  if (cachedAtEpoch) *cachedAtEpoch = 0;
 
   std::string raw;
   if (!readWhole(MARKET_QUOTES_PATH, raw)) return false;
 
   JsonDocument doc;
   if (deserializeJson(doc, raw)) return false;
+
+  if (cachedAtEpoch) *cachedAtEpoch = doc["cached_at_epoch"] | 0LL;
 
   JsonArray rows = doc["quotes"].as<JsonArray>();
   if (rows.isNull()) return false;
@@ -111,6 +117,7 @@ bool saveWeather(const WeatherSnapshot& weather) {
   if (!weather.available) return false;
 
   JsonDocument doc;
+  doc["cached_at_epoch"] = TimeService::nowEpoch();
   doc["available"] = weather.available;
   doc["city"] = weather.city;
   doc["country"] = weather.country;
@@ -149,14 +156,17 @@ bool saveWeather(const WeatherSnapshot& weather) {
   return writeAtomic(WEATHER_PATH, raw);
 }
 
-bool loadWeather(WeatherSnapshot& weather) {
+bool loadWeather(WeatherSnapshot& weather, int64_t* cachedAtEpoch) {
   weather = {};
+  if (cachedAtEpoch) *cachedAtEpoch = 0;
 
   std::string raw;
   if (!readWhole(WEATHER_PATH, raw)) return false;
 
   JsonDocument doc;
   if (deserializeJson(doc, raw)) return false;
+
+  if (cachedAtEpoch) *cachedAtEpoch = doc["cached_at_epoch"] | 0LL;
 
   weather.available = doc["available"] | false;
   weather.city = doc["city"] | "";

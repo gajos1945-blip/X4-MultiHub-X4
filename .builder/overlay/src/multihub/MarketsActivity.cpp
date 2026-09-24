@@ -9,6 +9,7 @@
 #include "MarketSearchResultsActivity.h"
 #include "DataCache.h"
 #include "PowerManager.h"
+#include "TimeService.h"
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
 
@@ -57,7 +58,7 @@ void MarketsActivity::reload() {
   MarketStore::loadFavorites(favorites);
 
   quotes.clear();
-  cachedData = DataCache::loadMarketQuotes(quotes);
+  cachedData = DataCache::loadMarketQuotes(quotes, &cacheEpoch);
   rebuildRows();
 }
 
@@ -105,7 +106,7 @@ void MarketsActivity::rebuildRows() {
       subtitle += " | ";
       subtitle += favorite.currency;
     }
-    if (cachedData) subtitle += " | CACHED";
+    if (cachedData) subtitle += " | " + TimeService::cacheAgeLabel(cacheEpoch);
     const MarketQuote* q = quoteFor(favorite.symbol);
     if (q && q->timestamp > 0) {
       subtitle += " | t=";
@@ -218,7 +219,7 @@ void MarketsActivity::refreshQuotes() {
   PowerManager::afterOnlineOperation();
   if (!response.ok) {
     std::vector<MarketQuote> cached;
-    if (DataCache::loadMarketQuotes(cached)) {
+    if (DataCache::loadMarketQuotes(cached, &cacheEpoch)) {
       quotes = std::move(cached);
       cachedData = true;
       lastError = "CACHED: " + response.error;
@@ -231,6 +232,7 @@ void MarketsActivity::refreshQuotes() {
     cachedData = false;
     lastError.clear();
     DataCache::saveMarketQuotes(quotes);
+    cacheEpoch = TimeService::nowEpoch();
   }
   rebuildRows();
   requestUpdate();

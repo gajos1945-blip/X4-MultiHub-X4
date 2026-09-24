@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -14,6 +15,7 @@ class WeatherActivity final : public UiListActivity {
   std::string header = "Pogoda";
   WeatherSnapshot weather;
   bool cachedData = false;
+  int64_t cacheEpoch = 0;
 
   std::vector<std::string> labels;
   std::vector<std::string> values;

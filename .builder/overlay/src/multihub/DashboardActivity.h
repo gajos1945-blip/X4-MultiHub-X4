@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -23,6 +24,8 @@ class DashboardActivity final : public UiListActivity {
   WeatherSnapshot weather;
   bool weatherCached = false;
   bool marketsCached = false;
+  int64_t weatherCacheEpoch = 0;
+  int64_t marketsCacheEpoch = 0;
   std::vector<MarketFavorite> favorites;
   std::vector<MarketQuote> quotes;
   std::vector<PlannerTask> tasks;

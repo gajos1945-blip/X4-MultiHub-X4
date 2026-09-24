@@ -114,3 +114,14 @@ Only after physical X4 validation.
 - [DONE] no intentional AP credential erase
 - [DEFERRED] deep-sleep/wake-source modifications until physical X4 validation
 - [DEFERRED] low-battery threshold until battery API is physically verified
+
+
+## v1.3-dev — Time / NTP / Today
+- [DONE] manual SNTP sync on an already-connected Wi-Fi session
+- [DONE] explicit timezone presets / POSIX TZ rules
+- [DONE] opt-in Planner Auto Today
+- [DONE] cache write timestamps when clock is valid
+- [DONE] cache age labels in Markets / Weather / Dashboard
+- [SAFE DEFAULT] Auto Today off
+- [DEFERRED] X4 RTC/deep-sleep accuracy claims until physical validation
+- [DEFERRED] automatic Wi-Fi connection solely for NTP

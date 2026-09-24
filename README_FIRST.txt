@@ -80,3 +80,6 @@ v1.1-dev: rozpoczecie dalszego rozwoju na bazie zamrozonego v1.0.0-rc1. Nowy mod
 
 
 v1.2-dev: Power Manager. Domyslnie brak automatycznego requestu News przy otwarciu. Opcjonalne Wi-Fi OFF po skonczonej operacji online jest domyslnie WYLACZONE.
+
+
+v1.3-dev: Time / NTP / Today. Manual SNTP, jawna strefa czasowa, opcjonalne Auto Today i wiek cache. Brak deklaracji o fizycznym RTC X4.

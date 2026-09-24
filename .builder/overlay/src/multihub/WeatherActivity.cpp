@@ -8,6 +8,7 @@
 #include "MarketStore.h"
 #include "DataCache.h"
 #include "PowerManager.h"
+#include "TimeService.h"
 #include "WeatherStore.h"
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
@@ -46,7 +47,7 @@ void WeatherActivity::onExit() {
 void WeatherActivity::reload() {
   MarketStore::loadGateway(gateway);
   WeatherStore::loadCity(city);
-  cachedData = DataCache::loadWeather(weather);
+  cachedData = DataCache::loadWeather(weather, &cacheEpoch);
   rebuildRows();
 }
 
@@ -87,7 +88,7 @@ void WeatherActivity::rebuildRows() {
     }
     std::string sourceTime = weather.observedAt;
     if (cachedData) {
-      sourceTime = "CACHED | " + sourceTime;
+      sourceTime = TimeService::cacheAgeLabel(cacheEpoch) + " | " + sourceTime;
     } else {
       sourceTime = "LIVE | " + sourceTime;
     }
@@ -173,7 +174,7 @@ void WeatherActivity::refreshWeather() {
   PowerManager::afterOnlineOperation();
   if (!response.ok) {
     WeatherSnapshot cached;
-    if (DataCache::loadWeather(cached)) {
+    if (DataCache::loadWeather(cached, &cacheEpoch)) {
       weather = std::move(cached);
       cachedData = true;
       lastError = "CACHED: " + response.error;
@@ -187,6 +188,7 @@ void WeatherActivity::refreshWeather() {
     cachedData = false;
     lastError.clear();
     DataCache::saveWeather(weather);
+    cacheEpoch = TimeService::nowEpoch();
   }
   rebuildRows();
   requestUpdate();

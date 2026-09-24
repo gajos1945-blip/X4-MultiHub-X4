@@ -44,17 +44,17 @@ def test_settings_exposes_power_manager():
 
 def test_v12_manifest_truthful_about_hardware_limits():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.2-dev"
-    assert data["status"] == "DEVELOPMENT_V1_2_HARDWARE_UNVERIFIED"
+    assert data["version"] == "1.3-dev"
+    assert data["status"] == "DEVELOPMENT_V1_3_HARDWARE_UNVERIFIED"
     assert data["physical_device_verified"] is False
     assert any("deep sleep" in item.lower() for item in data["not_implemented"])
     assert any("battery" in item.lower() for item in data["not_implemented"])
 
 def test_v12_workflow_names():
     workflow = (ROOT / ".github/workflows/build-x4-bin.yml").read_text(encoding="utf-8")
-    assert "BUILD X4 MULTIHUB v1.2 DEV BIN" in workflow
-    assert "X4_MultiHub_X4_v1_2_dev" in workflow
-    assert "X4_MultiHub_X4_v1.2-dev.bin" in workflow
+    assert "BUILD X4 MULTIHUB v1.3 DEV BIN" in workflow
+    assert "X4_MultiHub_X4_v1_3_dev" in workflow
+    assert "X4_MultiHub_X4_v1.3-dev.bin" in workflow
 
 def test_release_guard_requires_power_markers():
     guard = (ROOT / ".builder/tools/release_guard.py").read_text(encoding="utf-8")

@@ -10,6 +10,8 @@
 #include "MarketStore.h"
 #include "PlannerStore.h"
 #include "PowerSettingsActivity.h"
+#include "TimeSettingsActivity.h"
+#include "TimeService.h"
 #include "WeatherStore.h"
 #include "activities/util/KeyboardEntryActivity.h"
 #include "components/UITheme.h"
@@ -22,6 +24,7 @@ const char* LABELS[MultiHubSettingsActivity::ROWS] = {
     "X4 Data Gateway",
     "Miasto pogody",
     "Data planera",
+    "Czas / NTP / Today",
     "Uklad Dashboard",
     "Power Manager",
     "Wyczysc cache rynkow",
@@ -49,12 +52,16 @@ void MultiHubSettingsActivity::rebuildRows() {
   values[1] = gateway.empty() ? "USTAW http://IP:8788" : gateway;
   values[2] = city.empty() ? "USTAW" : city;
   values[3] = PlannerStore::validDate(plannerDate) ? plannerDate : "USTAW YYYY-MM-DD";
-  values[4] = "Pogoda / Rynki / Planner";
-  values[5] = "Siec / odswiezanie / Wi-Fi OFF";
-  values[6] = "market_quotes.json";
-  values[7] = "weather.json";
-  values[8] = "Rynki + Pogoda";
-  values[9] = "X4 MultiHub 1.2-dev";
+
+  std::string localTime;
+  values[4] = TimeService::localNow(localTime) ? localTime : "UNKNOWN";
+
+  values[5] = "Pogoda / Rynki / Planner";
+  values[6] = "Siec / odswiezanie / Wi-Fi OFF";
+  values[7] = "market_quotes.json";
+  values[8] = "weather.json";
+  values[9] = "Rynki + Pogoda";
+  values[10] = "X4 MultiHub 1.3-dev";
 
   for (int i = 0; i < ROWS; ++i) {
     rows[i] = {};
@@ -125,6 +132,16 @@ void MultiHubSettingsActivity::editPlannerDate() {
       });
 }
 
+void MultiHubSettingsActivity::openTimeSettings() {
+  startActivityForResult(
+      std::make_unique<TimeSettingsActivity>(renderer, mappedInput),
+      [this](const ActivityResult&) {
+        PlannerStore::loadActiveDate(plannerDate);
+        rebuildRows();
+        requestUpdate();
+      });
+}
+
 void MultiHubSettingsActivity::openDashboardLayout() {
   startActivityForResult(
       std::make_unique<DashboardSettingsActivity>(
@@ -179,13 +196,14 @@ void MultiHubSettingsActivity::activateIndex(const int index) {
     case 1: editGateway(); return;
     case 2: editCity(); return;
     case 3: editPlannerDate(); return;
-    case 4: openDashboardLayout(); return;
-    case 5: openPowerManager(); return;
-    case 6: clearMarketCache(); return;
-    case 7: clearWeatherCache(); return;
-    case 8: clearAllCache(); return;
-    case 9:
-      header = "X4 MultiHub 1.2-dev";
+    case 4: openTimeSettings(); return;
+    case 5: openDashboardLayout(); return;
+    case 6: openPowerManager(); return;
+    case 7: clearMarketCache(); return;
+    case 8: clearWeatherCache(); return;
+    case 9: clearAllCache(); return;
+    case 10:
+      header = "X4 MultiHub 1.3-dev";
       requestUpdate();
       return;
     default:

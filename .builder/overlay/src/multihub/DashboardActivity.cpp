@@ -10,6 +10,7 @@
 #include "DashboardSettingsActivity.h"
 #include "MarketsActivity.h"
 #include "PowerManager.h"
+#include "TimeService.h"
 #include "WeatherActivity.h"
 #include "WeatherStore.h"
 #include "components/UITheme.h"
@@ -89,10 +90,12 @@ void DashboardActivity::reload() {
   MarketStore::loadFavorites(favorites);
   PlannerStore::load(tasks);
   PlannerStore::loadActiveDate(activeDate);
+  std::string todayDate;
+  if (TimeService::applyTodayToPlanner(&todayDate)) activeDate = todayDate;
 
   quotes.clear();
-  marketsCached = DataCache::loadMarketQuotes(quotes);
-  weatherCached = DataCache::loadWeather(weather);
+  marketsCached = DataCache::loadMarketQuotes(quotes, &marketsCacheEpoch);
+  weatherCached = DataCache::loadWeather(weather, &weatherCacheEpoch);
 
   rebuildRows();
 }
@@ -109,9 +112,10 @@ void DashboardActivity::refreshAll() {
       weather = response.weather;
       weatherCached = false;
       DataCache::saveWeather(weather);
+      weatherCacheEpoch = TimeService::nowEpoch();
     } else {
       WeatherSnapshot cached;
-      if (DataCache::loadWeather(cached)) {
+      if (DataCache::loadWeather(cached, &weatherCacheEpoch)) {
         weather = std::move(cached);
         weatherCached = true;
         lastError = "Pogoda CACHED: " + response.error;
@@ -140,9 +144,10 @@ void DashboardActivity::refreshAll() {
       quotes = response.items;
       marketsCached = false;
       DataCache::saveMarketQuotes(quotes);
+      marketsCacheEpoch = TimeService::nowEpoch();
     } else {
       std::vector<MarketQuote> cached;
-      if (DataCache::loadMarketQuotes(cached)) {
+      if (DataCache::loadMarketQuotes(cached, &marketsCacheEpoch)) {
         quotes = std::move(cached);
         marketsCached = true;
         if (lastError.empty()) lastError = "Rynki CACHED: " + response.error;
@@ -183,7 +188,7 @@ void DashboardActivity::rebuildRows() {
         std::string value = weather.hasTemperature
                                 ? number1(weather.temperatureC, " C")
                                 : "DATA UNAVAILABLE";
-        std::string subtitle = weatherCached ? "CACHED | " : "LIVE | ";
+        std::string subtitle = weatherCached ? TimeService::cacheAgeLabel(weatherCacheEpoch) + " | " : "LIVE | ";
         subtitle += WeatherGatewayClient::codeName(weather.weatherCode);
         if (!weather.city.empty()) {
           subtitle += " | ";
@@ -226,7 +231,7 @@ void DashboardActivity::rebuildRows() {
                                ? favorites.size()
                                : MAX_MARKET_ROWS;
       for (size_t i = 0; i < count; ++i) {
-        std::string subtitle = marketsCached ? "CACHED | " : "LIVE | ";
+        std::string subtitle = marketsCached ? TimeService::cacheAgeLabel(marketsCacheEpoch) + " | " : "LIVE | ";
         subtitle += favorites[i].symbol;
         const MarketQuote* q = quoteFor(favorites[i].symbol);
         if (q && q->timestamp > 0) {

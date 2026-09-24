@@ -3,7 +3,7 @@ from pathlib import Path
 
 REQUIRED_MARKERS = (
     b"X4 MultiHub",
-    b"X4 MultiHub 1.2-dev",
+    b"X4 MultiHub 1.3-dev",
     b"Wyczysc caly cache",
     b"Wyczysc cache pogody",
     b"Wyczysc cache rynkow",
@@ -55,6 +55,11 @@ REQUIRED_MARKERS = (
     b"Online przy otwarciu",
     b"Wi-Fi OFF po odswiezeniu",
     b"Wylacz Wi-Fi teraz",
+    b"Czas / NTP / Today",
+    b"Planner: automatyczne Today",
+    b"Synchronizuj NTP",
+    b"Strefa czasowa",
+    b"NTP OK",
     b"Pogoda / Rynki / Planner",
 )
 

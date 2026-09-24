@@ -1,0 +1,16 @@
+X4 MultiHub v1.3-dev — Time / NTP / Today
+
+Python syntax: PASS
+Pytest: PASS
+113 passed
+
+Static safety:
+- NTP requires an already-connected Wi-Fi session
+- fresh SNTP COMPLETED status is required before NTP OK
+- timezone is explicit; UTC is the safe default
+- Planner Auto Today is OFF by default
+- older cache files remain readable
+- no deep-sleep / RTC accuracy claims are made
+
+PlatformIO/C++ compilation: pending GitHub Actions against pinned upstream.
+Physical XTEINK X4 validation: NOT RUN / HARDWARE_UNVERIFIED.

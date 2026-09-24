@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdint>
 #include <string>
 #include <vector>
 
@@ -16,6 +17,7 @@ class MarketsActivity final : public UiListActivity {
   std::string lastError;
   std::string header = "Markets & Weather";
   bool cachedData = false;
+  int64_t cacheEpoch = 0;
 
   std::vector<MarketFavorite> favorites;
   std::vector<MarketQuote> quotes;

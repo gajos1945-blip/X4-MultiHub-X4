@@ -42,10 +42,11 @@ def test_gateway_retry_backoff_is_bounded():
 
 def test_v07_manifest_truthful():
     data = json.loads((ROOT / ".builder/manifest.json").read_text(encoding="utf-8"))
-    assert data["version"] == "1.2-dev"
+    assert data["version"] == "1.3-dev"
     assert any("microSD cache for market quotes" in x for x in data["implemented"])
     assert any("retry/backoff" in x for x in data["implemented"])
-    assert "Reliable elapsed cache age calculation until X4 RTC/NTP behavior is physically verified" in data["not_implemented"]
+    assert any("cache age" in x.lower() for x in data["implemented"])
+    assert any("RTC" in x for x in data["not_implemented"])
     assert data["physical_device_verified"] is False
 
 def test_release_guard_requires_cache_markers():
