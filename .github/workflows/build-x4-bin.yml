@@ -1,17 +1,19 @@
-name: BUILD X4 MULTIHUB v1.7 DEV BIN
+name: BUILD X4 MULTIHUB v1.7 X4C HWTEST
 
 on:
   push:
-    branches: [main]
+    branches:
+      - main
+      - hardware/x4c-s3-v1.7
   workflow_dispatch:
 
 permissions:
   contents: read
 
 jobs:
-  build-x4-bin:
+  build-x4c-bin:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 60
 
     steps:
       - name: Checkout MultiHub builder
@@ -54,22 +56,21 @@ jobs:
       - name: Run Python tests
         run: python -m pytest -q
 
-      - name: Build X4 MultiHub
+      - name: Build X4 Classic ESP32-S3 MultiHub
         run: python .builder/build_ci.py
 
-      - name: Upload v1.7 development BIN
+      - name: Upload X4C v1.7 hardware-test BIN
         uses: actions/upload-artifact@v4
         with:
-          name: X4_MultiHub_X4_v1_7_dev
+          name: X4_MultiHub_X4C_v1_7_hwtest
           if-no-files-found: error
           path: |
-            dist/X4_MultiHub_X4_v1.7-dev.bin
-            dist/X4_MultiHub_X4_v1.7-dev.bin.sha256.txt
+            dist/X4_MultiHub_X4C_v1.7-hwtest.bin
+            dist/X4_MultiHub_X4C_v1.7-hwtest.bin.sha256.txt
             dist/build_manifest.json
             dist/source_report.json
             dist/DEV_STATUS.txt
           retention-days: 30
-
 
   build-gateway-windows:
     runs-on: windows-latest
@@ -102,7 +103,7 @@ jobs:
       - name: Upload Windows Gateway
         uses: actions/upload-artifact@v4
         with:
-          name: X4_Data_Gateway_Windows_v1_7_dev
+          name: X4_Data_Gateway_Windows_v1_7_hwtest
           if-no-files-found: error
           path: |
             gateway/dist/X4DataGateway.exe
