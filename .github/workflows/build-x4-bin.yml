@@ -1,4 +1,4 @@
-name: BUILD X4 MULTIHUB v1.7 X4C HWTEST
+name: BUILD X4 MULTIHUB v1.7 DEV BIN
 
 on:
   push:
@@ -62,11 +62,11 @@ jobs:
       - name: Upload X4C v1.7 hardware-test BIN
         uses: actions/upload-artifact@v4
         with:
-          name: X4_MultiHub_X4C_v1_7_hwtest
+          name: X4_MultiHub_X4_v1_7_dev
           if-no-files-found: error
           path: |
-            dist/X4_MultiHub_X4C_v1.7-hwtest.bin
-            dist/X4_MultiHub_X4C_v1.7-hwtest.bin.sha256.txt
+            dist/X4_MultiHub_X4_v1.7-dev.bin
+            dist/X4_MultiHub_X4_v1.7-dev.bin.sha256.txt
             dist/build_manifest.json
             dist/source_report.json
             dist/DEV_STATUS.txt
@@ -103,7 +103,7 @@ jobs:
       - name: Upload Windows Gateway
         uses: actions/upload-artifact@v4
         with:
-          name: X4_Data_Gateway_Windows_v1_7_hwtest
+          name: X4_Data_Gateway_Windows_v1_7_dev
           if-no-files-found: error
           path: |
             gateway/dist/X4DataGateway.exe

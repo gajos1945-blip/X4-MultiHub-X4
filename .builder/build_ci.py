@@ -32,7 +32,7 @@ EXPECTED_MCU = "esp32s3"
 EXPECTED_CHIP_ID_RAW = 9
 EXPECTED_DEVICE_MACRO = "FREEINK_DEVICE_X4CLASSIC=1"
 
-RELEASE_NAME = "X4_MultiHub_X4C_v1.7-hwtest.bin"
+RELEASE_NAME = "X4_MultiHub_X4_v1.7-dev.bin"
 
 # Verified physical-device facts from the pre-flash backup session.
 PHYSICAL_PROFILE = {
@@ -205,7 +205,7 @@ def main() -> int:
     # and for the real device table used by the web flasher.
     build_slot_size = int(app_partition["size"])
     physical_slot_size = 0x7E0000
-    if info["size"] > build_slot_size:
+    if info["size"] > int(app_partition["size"]):
         raise BuildError(
             f"Application image ({info['size']}) exceeds CrossPoint build "
             f"app partition ({build_slot_size})"
@@ -237,7 +237,7 @@ def main() -> int:
 
     manifest = {
         "project": "X4 MultiHub",
-        "version": "1.7-hwtest",
+        "version": "1.7-dev",
         "target": "XTEINK X4 Classic / ESP32-S3",
         "base_release": BASE_RELEASE,
         "upstream_commit": COMMIT,
@@ -253,10 +253,11 @@ def main() -> int:
             "app1_offset": 0x7F0000,
             "slot_size": physical_slot_size,
         },
-        "release_status": "X4C_V1_7_HARDWARE_TEST_CANDIDATE",
-        "software_feature_complete": True,
+        "release_status": "DEVELOPMENT_V1_7_HARDWARE_UNVERIFIED",
+        "software_feature_complete": False,
         "image_integrity_verified": True,
         "chip_target_verified": True,
+        "application_partition_spare_bytes": partition_spare,
         "application_partition_spare_bytes_build": partition_spare,
         "application_partition_spare_bytes_physical": physical_spare,
         "rc_source_audit_verified": True,
@@ -271,7 +272,7 @@ def main() -> int:
     )
 
     (dist / "DEV_STATUS.txt").write_text(
-        "X4 MultiHub v1.7-hwtest\n"
+        "X4 MultiHub v1.7-dev\n"
         "TARGET: XTEINK X4 Classic / ESP32-S3\n"
         "BASE: CrossPoint 1.6.5\n"
         "ENV: x4c-gh_release\n"
@@ -298,7 +299,7 @@ def main() -> int:
     print("=== 10/10 DONE ===")
     print("BIN:", final_bin)
     print("SHA-256:", sha)
-    print("Status: X4C v1.7 HARDWARE TEST CANDIDATE")
+    print("Status: DEVELOPMENT_V1_7_HARDWARE_UNVERIFIED")
     print("This workflow does NOT flash or erase any device.")
     return 0
 

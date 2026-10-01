@@ -1,7 +1,7 @@
-﻿{
+{
     "project":  "X4 MultiHub",
-    "version":  "1.7-hwtest",
-    "status":  "X4C_ESP32S3_HARDWARE_TEST_PREPARATION",
+    "version":  "1.7-dev",
+    "status":  "DEVELOPMENT_V1_7_HARDWARE_UNVERIFIED",
     "base":  {
                  "project":  "CrossPoint Reader",
                  "release":  "1.6.5",
