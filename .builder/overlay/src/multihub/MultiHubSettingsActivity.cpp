@@ -41,6 +41,9 @@ const char* LABELS[MultiHubSettingsActivity::ROWS] = {
 void MultiHubSettingsActivity::onEnter() {
   UiListActivity::onEnter();
   reload();
+  if (initialSelection > 0 && initialSelection < ROWS) {
+    moveSelectionTo(initialSelection);
+  }
 }
 
 void MultiHubSettingsActivity::reload() {

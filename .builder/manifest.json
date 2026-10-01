@@ -97,7 +97,8 @@
                         "X4-side gateway health and auth-token match test",
                         "microSD write/read/remove self-test using a temporary diagnostics file",
                         "Exported diagnostics report on microSD with gateway token value redacted",
-                        "Windows Gateway Test X4 auth button using /v1/ping"
+                        "Windows Gateway Test X4 auth button using /v1/ping",
+                        "Graphical E-Ink UI2 dashboard: 8 primary modules plus Dashboard, Diagnostics and Gateway quick actions"
                     ],
     "not_implemented":  [
                             "Automatic Wi-Fi connection solely for NTP; sync requires an existing Wi-Fi connection",
