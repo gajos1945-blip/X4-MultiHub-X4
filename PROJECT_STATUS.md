@@ -10,14 +10,13 @@ Ostatnia aktualizacja: 2026-11-04
 - Testy: 155 passed (`python -m pytest -q`, 2026-11-04).
 
 ## Decyzje
+- 2026-11-04: projekt `CrossPoint-MAX-X4` zakończony; dalszy rozwój tylko w X4 MultiHub.
 - Overlay + patcher zamiast forka CrossPoint — łatwa aktualizacja bazy, zmiany upstreamu w jednym miejscu.
 - Fail-closed CI: brak BIN, jeśli flash/offset/partycje są UNKNOWN.
 - Gateway HTTP w LAN, tylko token (bez TLS) — świadomie; nie wystawiać do Internetu.
 
 ## Otwarte
 - Fizyczna walidacja na X4: boot, e-ink/przyciski, Wi-Fi, gateway z urządzenia, microSD — NOT RUN.
-- Kod buildera i gatewaya jest w dużej części zdublowany z `CrossPoint-MAX-X4`.
 
 ## Następne kroki
 1. Test na fizycznym X4 wg `docs/RC_CHECKLIST.md`.
-2. Rozważyć wydzielenie wspólnego `.builder/tools` + bazowego gatewaya (submoduł/pakiet) dla obu projektów.
